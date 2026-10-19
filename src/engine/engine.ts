@@ -192,7 +192,7 @@ export function itemPolicies(m: Model) {
 
 /** Everything the reference script outputs, in the same shape as expected_values.json. */
 export function computeAll(m: Model) {
-  const { ds, today } = m;
+  const { today } = m;
   const { policies, onHand, expired } = itemPolicies(m);
   const res: Record<string, unknown> = { today };
   const items: Record<string, ItemPolicy> = {};
