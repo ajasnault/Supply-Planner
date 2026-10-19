@@ -1,0 +1,821 @@
+{
+ "today": "2026-10-19",
+ "items": {
+  "I001": {
+   "supplier": "S01",
+   "use_per_week": 3953.2,
+   "on_hand": 9007.7,
+   "cover_weeks": 2.3,
+   "lead_time_quoted_weeks": 1.4,
+   "lead_time_observed_weeks": 1.4,
+   "safety_stock": 7906,
+   "reorder_point": 13568,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1041"
+   ]
+  },
+  "I002": {
+   "supplier": "S01",
+   "use_per_week": 43.1,
+   "on_hand": 308.1,
+   "cover_weeks": 7.1,
+   "lead_time_quoted_weeks": 1.0,
+   "lead_time_observed_weeks": 0.9,
+   "safety_stock": 86,
+   "reorder_point": 126,
+   "qualified_sources_lsn": 1,
+   "open_pos": []
+  },
+  "I003": {
+   "supplier": "S12",
+   "use_per_week": 94.1,
+   "on_hand": 692.9,
+   "cover_weeks": 7.4,
+   "lead_time_quoted_weeks": 1.3,
+   "lead_time_observed_weeks": 1.6,
+   "safety_stock": 188,
+   "reorder_point": 336,
+   "qualified_sources_lsn": 2,
+   "open_pos": [
+    "PO-26-1073"
+   ]
+  },
+  "I004": {
+   "supplier": "S12",
+   "use_per_week": 15.1,
+   "on_hand": 74.3,
+   "cover_weeks": 4.9,
+   "lead_time_quoted_weeks": 1.3,
+   "lead_time_observed_weeks": 1.4,
+   "safety_stock": 30,
+   "reorder_point": 51,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1084"
+   ]
+  },
+  "I005": {
+   "supplier": "S10",
+   "use_per_week": 75.3,
+   "on_hand": 588.7,
+   "cover_weeks": 7.8,
+   "lead_time_quoted_weeks": 0.4,
+   "lead_time_observed_weeks": 0.6,
+   "safety_stock": 151,
+   "reorder_point": 199,
+   "qualified_sources_lsn": 1,
+   "open_pos": []
+  },
+  "I010": {
+   "supplier": "S03",
+   "use_per_week": 158.1,
+   "on_hand": 2269.2,
+   "cover_weeks": 14.4,
+   "lead_time_quoted_weeks": 3.0,
+   "lead_time_observed_weeks": 3.5,
+   "safety_stock": 316,
+   "reorder_point": 869,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1109"
+   ]
+  },
+  "I011": {
+   "supplier": "S03",
+   "use_per_week": 79.1,
+   "on_hand": 324.3,
+   "cover_weeks": 4.1,
+   "lead_time_quoted_weeks": 3.0,
+   "lead_time_observed_weeks": 3.2,
+   "safety_stock": 158,
+   "reorder_point": 407,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1123"
+   ]
+  },
+  "I012": {
+   "supplier": "S04",
+   "use_per_week": 15.8,
+   "on_hand": 100.9,
+   "cover_weeks": 6.4,
+   "lead_time_quoted_weeks": 5.0,
+   "lead_time_observed_weeks": 5.4,
+   "safety_stock": 32,
+   "reorder_point": 117,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1130"
+   ]
+  },
+  "I013": {
+   "supplier": "S04",
+   "use_per_week": 11.9,
+   "on_hand": 47.4,
+   "cover_weeks": 4.0,
+   "lead_time_quoted_weeks": 5.0,
+   "lead_time_observed_weeks": 6.2,
+   "safety_stock": 24,
+   "reorder_point": 98,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1136"
+   ]
+  },
+  "I020": {
+   "supplier": "S05",
+   "use_per_week": 961.0,
+   "on_hand": 1862.4,
+   "cover_weeks": 1.9,
+   "lead_time_quoted_weeks": 6.0,
+   "lead_time_observed_weeks": 6.3,
+   "safety_stock": 1922,
+   "reorder_point": 7945,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1145",
+    "PO-26-1146",
+    "PO-26-1147"
+   ]
+  },
+  "I021": {
+   "supplier": "S05",
+   "use_per_week": 360.4,
+   "on_hand": 1662.9,
+   "cover_weeks": 4.6,
+   "lead_time_quoted_weeks": 6.0,
+   "lead_time_observed_weeks": 7.4,
+   "safety_stock": 721,
+   "reorder_point": 3381,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1154"
+   ]
+  },
+  "I022": {
+   "supplier": "S10",
+   "use_per_week": 720.8,
+   "on_hand": 5867.9,
+   "cover_weeks": 8.1,
+   "lead_time_quoted_weeks": 0.4,
+   "lead_time_observed_weeks": 0.6,
+   "safety_stock": 1442,
+   "reorder_point": 1863,
+   "qualified_sources_lsn": 1,
+   "open_pos": []
+  },
+  "I023": {
+   "supplier": "S05",
+   "use_per_week": 25.0,
+   "on_hand": 230.9,
+   "cover_weeks": 9.2,
+   "lead_time_quoted_weeks": 6.0,
+   "lead_time_observed_weeks": 6.7,
+   "safety_stock": 50,
+   "reorder_point": 218,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1172"
+   ]
+  },
+  "I024": {
+   "supplier": "S07",
+   "use_per_week": 1274.5,
+   "on_hand": 4704.3,
+   "cover_weeks": 3.7,
+   "lead_time_quoted_weeks": 1.4,
+   "lead_time_observed_weeks": 1.6,
+   "safety_stock": 2549,
+   "reorder_point": 4617,
+   "qualified_sources_lsn": 2,
+   "open_pos": []
+  },
+  "I030": {
+   "supplier": "S06",
+   "use_per_week": 1.2,
+   "on_hand": 5.6,
+   "cover_weeks": 4.6,
+   "lead_time_quoted_weeks": 4.0,
+   "lead_time_observed_weeks": 4.2,
+   "safety_stock": 2,
+   "reorder_point": 8,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1192"
+   ]
+  },
+  "I031": {
+   "supplier": "S06",
+   "use_per_week": 1.2,
+   "on_hand": 6.0,
+   "cover_weeks": 4.9,
+   "lead_time_quoted_weeks": 4.0,
+   "lead_time_observed_weeks": 4.4,
+   "safety_stock": 2,
+   "reorder_point": 8,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1198"
+   ]
+  },
+  "I032": {
+   "supplier": "S10",
+   "use_per_week": 122.1,
+   "on_hand": 619.2,
+   "cover_weeks": 5.1,
+   "lead_time_quoted_weeks": 0.4,
+   "lead_time_observed_weeks": 0.7,
+   "safety_stock": 244,
+   "reorder_point": 333,
+   "qualified_sources_lsn": 1,
+   "open_pos": []
+  },
+  "I040": {
+   "supplier": "S13",
+   "use_per_week": 8.5,
+   "on_hand": 72.3,
+   "cover_weeks": 8.5,
+   "lead_time_quoted_weeks": 2.0,
+   "lead_time_observed_weeks": 2.1,
+   "safety_stock": 17,
+   "reorder_point": 35,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1220"
+   ]
+  },
+  "I041": {
+   "supplier": "S09",
+   "use_per_week": 4.4,
+   "on_hand": 17.5,
+   "cover_weeks": 3.9,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 1.9,
+   "safety_stock": 9,
+   "reorder_point": 17,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1231"
+   ]
+  },
+  "I042": {
+   "supplier": "S09",
+   "use_per_week": 4.4,
+   "on_hand": 20.5,
+   "cover_weeks": 4.6,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 1.8,
+   "safety_stock": 9,
+   "reorder_point": 17,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1242"
+   ]
+  },
+  "I050": {
+   "supplier": "S13",
+   "use_per_week": 5.5,
+   "on_hand": 38.0,
+   "cover_weeks": 6.9,
+   "lead_time_quoted_weeks": 2.0,
+   "lead_time_observed_weeks": 2.1,
+   "safety_stock": 11,
+   "reorder_point": 23,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1248"
+   ]
+  },
+  "I051": {
+   "supplier": "S09",
+   "use_per_week": 2.9,
+   "on_hand": 18.4,
+   "cover_weeks": 6.4,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 1.7,
+   "safety_stock": 6,
+   "reorder_point": 11,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1254"
+   ]
+  },
+  "I060": {
+   "supplier": "S14",
+   "use_per_week": 0.0,
+   "on_hand": 0.0,
+   "cover_weeks": null,
+   "lead_time_quoted_weeks": 8.0,
+   "lead_time_observed_weeks": 8.0,
+   "safety_stock": 0,
+   "reorder_point": 0,
+   "qualified_sources_lsn": 0,
+   "open_pos": []
+  },
+  "I061": {
+   "supplier": "S14",
+   "use_per_week": 0.0,
+   "on_hand": 0.0,
+   "cover_weeks": null,
+   "lead_time_quoted_weeks": 8.0,
+   "lead_time_observed_weeks": 8.0,
+   "safety_stock": 0,
+   "reorder_point": 0,
+   "qualified_sources_lsn": 0,
+   "open_pos": []
+  },
+  "I062": {
+   "supplier": "S10",
+   "use_per_week": 0.0,
+   "on_hand": 0.0,
+   "cover_weeks": null,
+   "lead_time_quoted_weeks": 0.7,
+   "lead_time_observed_weeks": 0.7,
+   "safety_stock": 0,
+   "reorder_point": 0,
+   "qualified_sources_lsn": 1,
+   "open_pos": []
+  },
+  "I070": {
+   "supplier": "S09",
+   "use_per_week": 60.2,
+   "on_hand": 1647.1,
+   "cover_weeks": 27.3,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 1.9,
+   "safety_stock": 120,
+   "reorder_point": 234,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1265"
+   ]
+  },
+  "I071": {
+   "supplier": "S09",
+   "use_per_week": 22590.0,
+   "on_hand": 107559.8,
+   "cover_weeks": 4.8,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 1.8,
+   "safety_stock": 45180,
+   "reorder_point": 85842,
+   "qualified_sources_lsn": 2,
+   "open_pos": [
+    "PO-26-1276"
+   ]
+  },
+  "I072": {
+   "supplier": "S09",
+   "use_per_week": 7530.0,
+   "on_hand": 32836.7,
+   "cover_weeks": 4.4,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 1.8,
+   "safety_stock": 15060,
+   "reorder_point": 28614,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1287"
+   ]
+  },
+  "I073": {
+   "supplier": "S09",
+   "use_per_week": 39.2,
+   "on_hand": 172.9,
+   "cover_weeks": 4.4,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 1.9,
+   "safety_stock": 78,
+   "reorder_point": 152,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1298"
+   ]
+  },
+  "I074": {
+   "supplier": "S09",
+   "use_per_week": 75.3,
+   "on_hand": 670.9,
+   "cover_weeks": 8.9,
+   "lead_time_quoted_weeks": 1.7,
+   "lead_time_observed_weeks": 2.0,
+   "safety_stock": 151,
+   "reorder_point": 299,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1309"
+   ]
+  },
+  "I075": {
+   "supplier": "S10",
+   "use_per_week": 11.3,
+   "on_hand": 102.7,
+   "cover_weeks": 9.1,
+   "lead_time_quoted_weeks": 0.4,
+   "lead_time_observed_weeks": 0.6,
+   "safety_stock": 23,
+   "reorder_point": 30,
+   "qualified_sources_lsn": 1,
+   "open_pos": []
+  },
+  "I080": {
+   "supplier": "S13",
+   "use_per_week": 11.3,
+   "on_hand": 54.4,
+   "cover_weeks": 4.8,
+   "lead_time_quoted_weeks": 3.0,
+   "lead_time_observed_weeks": 3.3,
+   "safety_stock": 23,
+   "reorder_point": 60,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1331"
+   ]
+  },
+  "I081": {
+   "supplier": "S13",
+   "use_per_week": 18.8,
+   "on_hand": 113.0,
+   "cover_weeks": 6.0,
+   "lead_time_quoted_weeks": 3.0,
+   "lead_time_observed_weeks": 3.2,
+   "safety_stock": 38,
+   "reorder_point": 98,
+   "qualified_sources_lsn": 1,
+   "open_pos": [
+    "PO-26-1342"
+   ]
+  }
+ },
+ "summary": {
+  "active_items": 30,
+  "below_reorder_point": [
+   "I001",
+   "I011",
+   "I012",
+   "I013",
+   "I020",
+   "I021",
+   "I030",
+   "I031",
+   "I080"
+  ],
+  "cover_below_lead_time": [
+   "I013",
+   "I020",
+   "I021"
+  ],
+  "single_source_items": 27,
+  "inventory_value_chf": 1177785,
+  "expired_lots": [
+   {
+    "item": "I024",
+    "lot": "L024-0066",
+    "qty": 2600.0,
+    "expiry": "2026-10-02",
+    "status": "available",
+    "value_chf": 8994
+   }
+  ],
+  "lsn_throughput_4wk_avg": 3419,
+  "competition_4wk_avg": 352
+ },
+ "expiry_risk_26w": {
+  "I010": [
+   {
+    "lot": "L010-0065",
+    "qty": 429,
+    "expiry": "2026-11-09",
+    "value_chf": 116728
+   }
+  ]
+ },
+ "cost_per_protein_chf": {
+  "BIND_BLI": {
+   "by_category": {
+    "DNA": 23.07,
+    "EXPRESSION": 18.58,
+    "QC": 1.27,
+    "CONSUMABLE": 0.52,
+    "BINDING": 5.48,
+    "TARGETS": 1.73
+   },
+   "material": 50.64,
+   "landed_lsn": 52.39,
+   "landed_ldn_chf": 52.98,
+   "landed_ldn_gbp": 49.01
+  },
+  "BIND_SPR": {
+   "by_category": {
+    "DNA": 23.07,
+    "EXPRESSION": 18.58,
+    "QC": 1.27,
+    "CONSUMABLE": 0.52,
+    "BINDING": 2.28,
+    "TARGETS": 1.04
+   },
+   "material": 46.75,
+   "landed_lsn": 48.32,
+   "landed_ldn_chf": 48.82,
+   "landed_ldn_gbp": 45.16
+  },
+  "EXPR": {
+   "by_category": {
+    "DNA": 23.07,
+    "EXPRESSION": 18.58,
+    "QC": 1.27,
+    "CONSUMABLE": 0.52
+   },
+   "material": 43.43,
+   "landed_lsn": 44.91,
+   "landed_ldn_chf": 45.44,
+   "landed_ldn_gbp": 42.04
+  },
+  "THERMO": {
+   "by_category": {
+    "DNA": 23.07,
+    "EXPRESSION": 18.58,
+    "QC": 1.27,
+    "CONSUMABLE": 0.52,
+    "THERMO": 0.09
+   },
+   "material": 43.52,
+   "landed_lsn": 45.0,
+   "landed_ldn_chf": 45.53,
+   "landed_ldn_gbp": 42.12
+  },
+  "ENZ_ACT": {
+   "by_category": {
+    "DNA": 23.07,
+    "EXPRESSION": 18.58,
+    "QC": 1.27,
+    "CONSUMABLE": 0.52,
+    "ENZYME": 1.6
+   },
+   "material": 45.03,
+   "landed_lsn": 46.57,
+   "landed_ldn_chf": 47.13,
+   "landed_ldn_gbp": 43.6
+  },
+  "DEVELOP": {
+   "by_category": {
+    "DNA": 23.07,
+    "EXPRESSION": 18.58,
+    "QC": 1.27,
+    "CONSUMABLE": 0.52,
+    "DEVELOP": 2.29
+   },
+   "material": 45.72,
+   "landed_lsn": 47.28,
+   "landed_ldn_chf": 47.86,
+   "landed_ldn_gbp": 44.27
+  }
+ },
+ "suppliers": {
+  "S01": {
+   "name": "Helix Genomics",
+   "annual_spend_kchf": 2621,
+   "quoted_weeks": 1.3,
+   "actual_weeks": 1.3,
+   "on_time_pct": 64,
+   "received_pos": 61
+  },
+  "S03": {
+   "name": "Lysis Bio",
+   "annual_spend_kchf": 1737,
+   "quoted_weeks": 3.0,
+   "actual_weeks": 3.3,
+   "on_time_pct": 38,
+   "received_pos": 26
+  },
+  "S04": {
+   "name": "Ribosyn Labs",
+   "annual_spend_kchf": 736,
+   "quoted_weeks": 5.0,
+   "actual_weeks": 5.8,
+   "on_time_pct": 27,
+   "received_pos": 11
+  },
+  "S05": {
+   "name": "Octane Biosensors",
+   "annual_spend_kchf": 483,
+   "quoted_weeks": 6.0,
+   "actual_weeks": 6.7,
+   "on_time_pct": 30,
+   "received_pos": 20
+  },
+  "S06": {
+   "name": "Kinetiq Instruments",
+   "annual_spend_kchf": 26,
+   "quoted_weeks": 4.0,
+   "actual_weeks": 4.3,
+   "on_time_pct": 20,
+   "received_pos": 10
+  },
+  "S07": {
+   "name": "Proteo Catalog",
+   "annual_spend_kchf": 158,
+   "quoted_weeks": 1.4,
+   "actual_weeks": 1.6,
+   "on_time_pct": 36,
+   "received_pos": 14
+  },
+  "S09": {
+   "name": "LabPlast Europa",
+   "annual_spend_kchf": 125,
+   "quoted_weeks": 1.7,
+   "actual_weeks": 1.8,
+   "on_time_pct": 43,
+   "received_pos": 75
+  },
+  "S10": {
+   "name": "Alpine Lab Supply",
+   "annual_spend_kchf": 34,
+   "quoted_weeks": 0.4,
+   "actual_weeks": 0.7,
+   "on_time_pct": 30,
+   "received_pos": 44
+  },
+  "S12": {
+   "name": "Enzymatica",
+   "annual_spend_kchf": 474,
+   "quoted_weeks": 1.3,
+   "actual_weeks": 1.5,
+   "on_time_pct": 40,
+   "received_pos": 20
+  },
+  "S13": {
+   "name": "Lumina Assays",
+   "annual_spend_kchf": 205,
+   "quoted_weeks": 2.6,
+   "actual_weeks": 2.8,
+   "on_time_pct": 34,
+   "received_pos": 35
+  }
+ },
+ "volumes_2027": {
+  "I001": {
+   "LSN": 372922,
+   "LDN": 109502
+  },
+  "I010": {
+   "LSN": 14917,
+   "LDN": 4380
+  },
+  "I020": {
+   "LSN": 76237,
+   "LDN": 26064
+  }
+ },
+ "negotiation": {
+  "S03_I010": {
+   "volume_ml": 19297,
+   "list_eur": 290,
+   "top_tier_eur": 245,
+   "saving_chf": 814961,
+   "saving_per_protein_chf": 1.77
+  },
+  "S01_I001": {
+   "volume": 482424,
+   "current_usd": 19.2,
+   "tier_usd": 17.6,
+   "next_tier_at": 600000,
+   "saving_chf": 618583
+  },
+  "S05_I020": {
+   "volume": 102301,
+   "list_usd": 11.5,
+   "tier_usd": 10.4,
+   "saving_chf": 90182
+  }
+ },
+ "london": {
+  "orders": {
+   "S01": {
+    "items": [
+     "I001",
+     "I002"
+    ],
+    "cost_chf": 47459,
+    "lead_days": 10,
+    "order_by": "2026-12-25"
+   },
+   "S12": {
+    "items": [
+     "I003",
+     "I004"
+    ],
+    "cost_chf": 7914,
+    "lead_days": 9,
+    "order_by": "2026-12-26"
+   },
+   "S11": {
+    "items": [
+     "I005",
+     "I075"
+    ],
+    "cost_chf": 144,
+    "lead_days": 3,
+    "order_by": "2027-01-01"
+   },
+   "S03": {
+    "items": [
+     "I010",
+     "I011"
+    ],
+    "cost_chf": 30616,
+    "lead_days": 21,
+    "order_by": "2026-12-14"
+   },
+   "S04": {
+    "items": [
+     "I012",
+     "I013"
+    ],
+    "cost_chf": 13213,
+    "lead_days": 35,
+    "order_by": "2026-11-30"
+   },
+   "S05": {
+    "items": [
+     "I020",
+     "I021",
+     "I023"
+    ],
+    "cost_chf": 11305,
+    "lead_days": 42,
+    "order_by": "2026-11-23"
+   },
+   "S07": {
+    "items": [
+     "I024"
+    ],
+    "cost_chf": 3478,
+    "lead_days": 10,
+    "order_by": "2026-12-25"
+   },
+   "S09": {
+    "items": [
+     "I070",
+     "I071",
+     "I072",
+     "I073",
+     "I074"
+    ],
+    "cost_chf": 1144,
+    "lead_days": 12,
+    "order_by": "2026-12-23"
+   },
+   "S13": {
+    "items": [
+     "I080",
+     "I081"
+    ],
+    "cost_chf": 3056,
+    "lead_days": 21,
+    "order_by": "2026-12-14"
+   }
+  },
+  "total_chf": 118329,
+  "no_qualified_source": [
+   {
+    "item": "I022",
+    "qty": 603
+   }
+  ]
+ },
+ "cogs": {
+  "ytd_2026_chf": 4584138,
+  "forecast_2027_chf": 22015637,
+  "proteins_2027": 459452,
+  "bli_cost_per_protein_by_month": {
+   "2026-01": 52.48,
+   "2026-02": 52.03,
+   "2026-03": 51.66,
+   "2026-04": 52.2,
+   "2026-05": 51.52,
+   "2026-06": 51.97,
+   "2026-07": 50.4,
+   "2026-08": 50.61,
+   "2026-09": 51.08,
+   "2026-10": 50.64,
+   "2026-11": 50.64,
+   "2026-12": 50.91,
+   "2027-01": 50.77,
+   "2027-02": 50.55,
+   "2027-03": 50.44,
+   "2027-04": 50.87,
+   "2027-05": 50.63,
+   "2027-06": 50.65,
+   "2027-07": 50.16,
+   "2027-08": 50.76,
+   "2027-09": 51.04,
+   "2027-10": 50.82,
+   "2027-11": 50.45,
+   "2027-12": 50.49
+  },
+  "savings_recurring_chf": 1523726,
+  "savings_per_protein_chf": 3.32
+ }
+}

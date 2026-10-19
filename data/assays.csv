@@ -1,0 +1,7 @@
+assay_id,assay_name,status,notes
+BIND_BLI,Binding affinity (BLI),live,"Default binding assay, 2 replicates"
+BIND_SPR,Binding kinetics (SPR),live,Premium kinetics
+EXPR,Expression only,live,Expression + QC
+THERMO,Thermostability,live,Thermal shift
+ENZ_ACT,Enzyme activity,live,Launched 2026-06
+DEVELOP,Developability panel,in_development,SEC + CE-SDS; LSN launch planned 2027-02-01

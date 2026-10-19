@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Inventory health</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0A6FA6}a:hover{color:#085A87}
+.sp{font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;color:#142933;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.sp button,.sp select,.sp input{font:inherit}
+.sp button{cursor:pointer}
+.sp h1,.sp h2{letter-spacing:-0.025em;font-weight:500}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#666666}
+.card{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px}
+.seg{display:flex;border:1px solid #C8D3DC;border-radius:8px;overflow:hidden;background:#FFFFFF}
+.seg button{height:44px;padding:0 16px;border:0;border-right:1px solid #C8D3DC;background:transparent;color:#142933;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:#36B7F6;color:#142933}
+.ib{width:44px;height:44px;border:1px solid #C8D3DC;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#142933;padding:0}
+.btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #C8D3DC;background:#FFFFFF;color:#142933;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-p{background:#36B7F6;border-color:#36B7F6;color:#142933}
+.chip{height:36px;padding:0 12px;border-radius:18px;border:1px solid #C8D3DC;background:#FFFFFF;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:#142933}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border-radius:13px;font-size:14px;font-weight:600;white-space:nowrap}
+.crit{background:#FBE7E4;color:#8E1B12}
+.warn{background:#FBF0D6;color:#6B4700}
+.ok{background:#E2F1E8;color:#1C5A3A}
+.lsn{width:10px;height:10px;background:#8855FF;border-radius:1px;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.ldn{width:11px;height:11px;background:#0F8B8D;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.mut{color:#666666}
+.u{color:#666666;font-size:13px;margin-left:3px}
+.r{text-align:right}
+.kpi{padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box;height:172px}
+.kl{font-size:15px;font-weight:500;color:#45525B}
+.kv{font-size:40px;font-weight:500;letter-spacing:-0.04em;line-height:1.1}
+.ku{font-size:18px;color:#666666;font-weight:500}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#45525B;border:1px dashed #9AA8B2;border-radius:4px;padding:2px 6px}
+.al{display:grid;grid-template-columns:132px 330px minmax(0,1fr) 150px 400px;gap:20px;align-items:center;padding:0 24px;height:86px;border-top:1px solid #E9F2F7}
+.h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-0.02em}
+.lg{display:flex;align-items:center;gap:8px;font-size:14px;color:#45525B}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px}
+table.t{border-collapse:collapse;width:100%}
+.t th{font-size:13px;font-weight:500;color:#666666;text-align:left;padding:0 10px;height:40px;border-bottom:1px solid #C8D3DC;white-space:nowrap}
+.t td{font-size:15px;padding:0 10px;height:56px;border-bottom:1px solid #E9F2F7;white-space:nowrap}
+.mt th{height:32px;padding:0 8px}.mt td{font-size:14px;height:36px;padding:0 8px}
+.ps{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid #E9F2F7;border-radius:8px}
+.pl{font-size:13px;color:#666666}
+.pv{font-size:22px;font-weight:500;letter-spacing:-0.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #E9F2F7;font-size:16px}
+.bar{position:relative;width:110px;height:8px;background:#E9F2F7;border-radius:4px}
+.bar i{position:absolute;left:0;top:0;height:8px;border-radius:4px;background:#45525B}
+.bar b{position:absolute;top:-4px;width:2px;height:16px;background:#142933}
+.act{margin-top:auto;border:1px solid #C8D3DC;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#F3F8FC}
+</style>
+</helmet>
+<div class="sp" style="width: 1920px; height: 1080px; background: #F7FBFE; display: flex; flex-direction: column; overflow: hidden">
+  <div style="height: 28px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: #EEF5FB; color: #45525B; font-size: 13px; border-bottom: 1px solid #DCE5EC">
+    <span style="display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-dasharray="2 2"></rect></svg>Synthetic data · generated for design reference, not company records</span>
+    <span class="mono">Data as of 2026-10-19 06:00 CET · import IMP-0214 · validated</span>
+  </div>
+  <header style="height: 76px; flex: none; display: flex; align-items: center; gap: 28px; padding: 0 40px; background: #FFFFFF; border-bottom: 1px solid #DCE5EC">
+    <div style="display: flex; align-items: center; gap: 10px; width: 190px">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#142933"></rect><path d="M6 15V9M11 15V6M16 15v-4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg>
+      <span style="font-size: 17px; font-weight: 600">Supply Planner</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0">
+      <span class="eyebrow">3 · Inventory health</span>
+      <span style="font-size: 22px; font-weight: 500; letter-spacing: -0.03em">Which items will run out or expire?</span>
+    </div>
+    <div class="seg" role="group" aria-label="Site">
+      <button aria-pressed="true"><span class="lsn"></span>LSN</button>
+      <button aria-pressed="false"><span class="ldn"></span>LDN</button>
+      <button aria-pressed="false">Group</button>
+    </div>
+    <nav aria-label="Views" style="display: flex; align-items: center; gap: 10px">
+      <button class="ib" aria-label="Previous view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 4L6 9l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <span class="mono" style="font-size: 15px; min-width: 44px; text-align: center">3 / 7</span>
+      <button class="ib" aria-label="Next view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M7 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    </nav>
+  </header>
+  <div style="flex: 1; display: flex; min-height: 0">
+    <main style="flex: 1; min-width: 0; padding: 24px 24px 24px 40px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <label for="i3q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search items</label>
+        <input id="i3q" placeholder="Search item, supplier, PO…" style="height: 40px; width: 280px; box-sizing: border-box; padding: 0 12px; border: 1px solid #C8D3DC; border-radius: 8px; font-size: 15px">
+        <button class="chip">All 33</button>
+        <button class="chip" aria-pressed="true" style="border-color: #0A6FA6; box-shadow: inset 0 0 0 1px #0A6FA6"><svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical 6 + <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch 8</button>
+        <button class="chip"><svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="#16A34A"></circle><path d="M4.2 7.2l1.9 1.9 3.8-4" stroke="#FFFFFF" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>OK 19</button>
+        <span class="mut" style="margin-left: auto; font-size: 14px">10 of 14 flagged · LSN · cover in weeks of next-4-week use</span>
+      </div>
+      <div class="card" style="flex: 1; overflow: hidden">
+        <table class="t">
+          <thead><tr><th style="padding-left: 16px">Status</th><th>Item</th><th>Cover vs real lead time</th><th class="r">Safety stock</th><th class="r">Reorder point</th><th>Open order</th>
+            <th aria-sort="ascending"><button style="border: 0; background: none; padding: 0; color: #0A6FA6; font-size: 13px; font-weight: 600; display: inline-flex; gap: 4px; align-items: center">Order by<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M2 6l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></button></th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="padding-left: 16px"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I013</span> Disulfide bond enhancer</span><span class="mut" style="font-size: 13px">Ribosyn Labs · single source</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>4.0</b><span class="u">/ 6.2 wk</span></span><div class="bar"><i style="width: 22px; background: #EF4444"></i><b style="left: 34px"></b></div></div></td>
+              <td class="r">24<span class="u">mL</span></td>
+              <td class="r">98<span class="u">mL</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1136</span> <span class="mut" style="font-size: 14px">· due 11-19</span></td>
+              <td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 13px">09-19</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I030</span> SPR sensor chip, SA</span><span class="mut" style="font-size: 13px">Kinetiq Instruments · single source</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>4.6</b><span class="u">/ 4.2 wk</span></span><div class="bar"><i style="width: 25px"></i><b style="left: 23px"></b></div></div></td>
+              <td class="r">2<span class="u">u</span></td>
+              <td class="r">8<span class="u">u</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1192</span> <span class="mut" style="font-size: 14px">· due 11-12</span></td>
+              <td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 13px">10-04</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I024</span> Biotinylated target panel</span><span class="mut" style="font-size: 13px">Proteo Catalog · lot <span class="mono">L024-0066</span> expired 10-02</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>3.7</b><span class="u">/ 1.6 wk</span></span><div class="bar"><i style="width: 20px"></i><b style="left: 9px"></b></div></div></td>
+              <td class="r">2 549<span class="u">µg</span></td>
+              <td class="r">4 617<span class="u">µg</span></td>
+              <td><span class="mut">None</span></td>
+              <td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 13px">10-15</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I001</span> Linear gene fragment ≤ 500 bp</span><span class="mut" style="font-size: 13px">Helix Genomics · single source</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>2.3</b><span class="u">/ 1.4 wk</span></span><div class="bar"><i style="width: 13px"></i><b style="left: 8px"></b></div></div></td>
+              <td class="r">7 906<span class="u">u</span></td>
+              <td class="r">13 568<span class="u">u</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1041</span> <span class="mut" style="font-size: 14px">· due 10-25</span></td>
+              <td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 13px">10-16</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I021</span> BLI biosensor, Ni-NTA</span><span class="mut" style="font-size: 13px">Octane Biosensors · single source</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>4.6</b><span class="u">/ 7.4 wk</span></span><div class="bar"><i style="width: 25px; background: #EF4444"></i><b style="left: 41px"></b></div></div></td>
+              <td class="r">721<span class="u">u</span></td>
+              <td class="r">3 381<span class="u">u</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1154</span> <span class="mut" style="font-size: 14px">· due 10-28</span></td>
+              <td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 13px">10-16</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I011</span> Cell-free energy solution</span><span class="mut" style="font-size: 13px">Lysis Bio · count −18 % on 10-15</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>4.1</b><span class="u">/ 3.2 wk</span></span><div class="bar"><i style="width: 23px"></i><b style="left: 17px"></b></div></div></td>
+              <td class="r">158<span class="u">mL</span></td>
+              <td class="r">407<span class="u">mL</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1123</span> <span class="mut" style="font-size: 14px">· due 10-26</span></td>
+              <td><span class="mono">2026-10-25</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I080</span> Protein QC cartridge</span><span class="mut" style="font-size: 13px">Lumina Assays · single source</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>4.8</b><span class="u">/ 3.3 wk</span></span><div class="bar"><i style="width: 27px"></i><b style="left: 18px"></b></div></div></td>
+              <td class="r">23<span class="u">u</span></td>
+              <td class="r">60<span class="u">u</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1331</span> <span class="mut" style="font-size: 14px">· due 11-04</span></td>
+              <td><span class="mono">2026-11-07</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I012</span> PURE cell-free system</span><span class="mut" style="font-size: 13px">Ribosyn Labs · single source</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>6.4</b><span class="u">/ 5.4 wk</span></span><div class="bar"><i style="width: 35px"></i><b style="left: 30px"></b></div></div></td>
+              <td class="r">32<span class="u">mL</span></td>
+              <td class="r">117<span class="u">mL</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1130</span> <span class="mut" style="font-size: 14px">· due 10-20</span></td>
+              <td><span class="mono">2026-11-13</span></td>
+            </tr>
+            <tr style="background: #E9F2F7; box-shadow: inset 0 0 0 2px #0A6FA6">
+              <td style="padding-left: 16px"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I020</span> BLI biosensor, streptavidin</span><span class="mut" style="font-size: 13px">Octane Biosensors · single source</span></div></td>
+              <td><div style="display: flex; align-items: center; gap: 10px"><span style="width: 84px"><b>1.9</b><span class="u">/ 6.3 wk</span></span><div class="bar"><i style="width: 11px; background: #EF4444"></i><b style="left: 34px"></b></div></div></td>
+              <td class="r">1 922<span class="u">u</span></td>
+              <td class="r">7 945<span class="u">u</span></td>
+              <td><span class="mono" style="font-size: 14px">PO-26-1145</span> <span style="color: #8E1B12; font-weight: 600; font-size: 14px">· 7 d late</span> <span class="mut" style="font-size: 13px">+2</span></td>
+              <td><span class="mono">2026-11-28</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 16px"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span></td>
+              <td><div style="display: flex; flex-direction: column"><span><span class="mono" style="font-weight: 500">I060</span> UHPLC SEC column</span><span class="mut" style="font-size: 13px">Chromalytix · quote only · DEVELOP</span></div></td>
+              <td><span class="mut">No use until 2027-02-01</span></td>
+              <td class="r"><span class="mut">—</span></td>
+              <td class="r"><span class="mut">—</span></td>
+              <td><span class="mut">None</span></td>
+              <td><span class="mono">2026-12-07</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <aside aria-label="Item detail I020" style="width: 680px; flex: none; box-sizing: border-box; background: #FFFFFF; border-left: 1px solid #C8D3DC; box-shadow: -12px 0 32px rgba(20, 41, 51, 0.10); padding: 20px 28px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span class="eyebrow">Item</span>
+          <h2 style="margin: 0; font-size: 24px"><span class="mono">I020</span> BLI biosensor, streptavidin (SA)</h2>
+          <span class="mut" style="font-size: 14px"><a href="#">Octane Biosensors</a> · single source · <span class="mono">OB-SA-96</span> · ambient · 11.50 USD/u</span>
+        </div>
+        <button class="ib" aria-label="Close panel"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+        <div class="ps" style="border-color: #F3B5B5; background: #FEF4F4"><span class="pl">Cover</span><span class="pv" style="color: #8E1B12">1.9 <span style="font-size: 14px">wk</span></span></div>
+        <div class="ps"><span class="pl">Lead time</span><span class="pv">6.3 <span style="font-size: 14px">wk</span></span><span class="pl">quoted 6.0</span></div>
+        <div class="ps"><span class="pl">Use</span><span class="pv">961 <span style="font-size: 14px">u/wk</span></span></div>
+        <div class="ps"><span class="pl">On hand</span><span class="pv">1 862 <span style="font-size: 14px">u</span></span><span class="pl">2 lots</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline"><h3 style="margin: 0; font-size: 16px; font-weight: 500">Stock projection, 26 weeks</h3><span class="mut" style="font-size: 13px">units · by lot and order · both lots expire after the horizon</span></div>
+        <svg width="624" height="262" viewBox="0 0 624 262" role="img" aria-label="I020 projected stock over 26 weeks by lot and incoming order. On-hand lots last until about 2026-11-01; PO-26-1145 and PO-26-1146 refill stock if they arrive by 2026-10-31; a proposed 7 500-unit order is needed by 2026-11-28." style="font-family: inherit">
+          <defs><pattern id="i3lt" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#EAF1F7"></rect><line x1="0" y1="0" x2="0" y2="8" stroke="#C8D3DC" stroke-width="2"></line></pattern></defs>
+          <rect x="50" y="30" width="133" height="200" fill="url(#i3lt)"></rect>
+          <g stroke="#E9F2F7"><line x1="50" y1="160.0" x2="600" y2="160.0"></line><line x1="50" y1="90.0" x2="600" y2="90.0"></line><line x1="50" y1="20.0" x2="600" y2="20.0"></line></g>
+          <g font-size="12" fill="#666666" text-anchor="end"><text x="44" y="234">0</text><text x="44" y="164">3 000</text><text x="44" y="94">6 000</text><text x="44" y="24">9 000</text></g>
+          <path d="M50.0,206.6 L71.2,228.4 L92.3,230.0 L113.5,230.0 L134.6,230.0 L155.8,230.0 L176.9,230.0 L198.1,230.0 L219.2,230.0 L240.4,230.0 L261.5,230.0 L282.7,230.0 L303.8,230.0 L325.0,230.0 L346.2,230.0 L367.3,230.0 L388.5,230.0 L409.6,230.0 L430.8,230.0 L451.9,230.0 L473.1,230.0 L494.2,230.0 L515.4,230.0 L536.5,230.0 L557.7,230.0 L578.8,230.0 L600.0,230.0 L600.0,230.0 L578.8,230.0 L557.7,230.0 L536.5,230.0 L515.4,230.0 L494.2,230.0 L473.1,230.0 L451.9,230.0 L430.8,230.0 L409.6,230.0 L388.5,230.0 L367.3,230.0 L346.2,230.0 L325.0,230.0 L303.8,230.0 L282.7,230.0 L261.5,230.0 L240.4,230.0 L219.2,230.0 L198.1,230.0 L176.9,230.0 L155.8,230.0 L134.6,230.0 L113.5,230.0 L92.3,230.0 L71.2,230.0 L50.0,230.0Z" fill="#22394A"></path><path d="M50.0,186.5 L71.2,208.3 L92.3,230.0 L113.5,230.0 L134.6,230.0 L155.8,230.0 L176.9,230.0 L198.1,230.0 L219.2,230.0 L240.4,230.0 L261.5,230.0 L282.7,230.0 L303.8,230.0 L325.0,230.0 L346.2,230.0 L367.3,230.0 L388.5,230.0 L409.6,230.0 L430.8,230.0 L451.9,230.0 L473.1,230.0 L494.2,230.0 L515.4,230.0 L536.5,230.0 L557.7,230.0 L578.8,230.0 L600.0,230.0 L600.0,230.0 L578.8,230.0 L557.7,230.0 L536.5,230.0 L515.4,230.0 L494.2,230.0 L473.1,230.0 L451.9,230.0 L430.8,230.0 L409.6,230.0 L388.5,230.0 L367.3,230.0 L346.2,230.0 L325.0,230.0 L303.8,230.0 L282.7,230.0 L261.5,230.0 L240.4,230.0 L219.2,230.0 L198.1,230.0 L176.9,230.0 L155.8,230.0 L134.6,230.0 L113.5,230.0 L92.3,230.0 L71.2,228.4 L50.0,206.6Z" fill="#6F8796"></path><path d="M50.0,186.5 L71.2,208.3 L92.3,149.4 L113.5,172.6 L134.6,195.1 L155.8,221.6 L176.9,230.0 L198.1,230.0 L219.2,230.0 L240.4,230.0 L261.5,230.0 L282.7,230.0 L303.8,230.0 L325.0,230.0 L346.2,230.0 L367.3,230.0 L388.5,230.0 L409.6,230.0 L430.8,230.0 L451.9,230.0 L473.1,230.0 L494.2,230.0 L515.4,230.0 L536.5,230.0 L557.7,230.0 L578.8,230.0 L600.0,230.0 L600.0,230.0 L578.8,230.0 L557.7,230.0 L536.5,230.0 L515.4,230.0 L494.2,230.0 L473.1,230.0 L451.9,230.0 L430.8,230.0 L409.6,230.0 L388.5,230.0 L367.3,230.0 L346.2,230.0 L325.0,230.0 L303.8,230.0 L282.7,230.0 L261.5,230.0 L240.4,230.0 L219.2,230.0 L198.1,230.0 L176.9,230.0 L155.8,230.0 L134.6,230.0 L113.5,230.0 L92.3,230.0 L71.2,208.3 L50.0,186.5Z" fill="#B4C6D3" stroke="#9AA8B2" stroke-width="0.8"></path><path d="M50.0,186.5 L71.2,208.3 L92.3,62.0 L113.5,85.3 L134.6,107.7 L155.8,134.2 L176.9,160.2 L198.1,184.8 L219.2,210.4 L240.4,230.0 L261.5,230.0 L282.7,230.0 L303.8,230.0 L325.0,230.0 L346.2,230.0 L367.3,230.0 L388.5,230.0 L409.6,230.0 L430.8,230.0 L451.9,230.0 L473.1,230.0 L494.2,230.0 L515.4,230.0 L536.5,230.0 L557.7,230.0 L578.8,230.0 L600.0,230.0 L600.0,230.0 L578.8,230.0 L557.7,230.0 L536.5,230.0 L515.4,230.0 L494.2,230.0 L473.1,230.0 L451.9,230.0 L430.8,230.0 L409.6,230.0 L388.5,230.0 L367.3,230.0 L346.2,230.0 L325.0,230.0 L303.8,230.0 L282.7,230.0 L261.5,230.0 L240.4,230.0 L219.2,230.0 L198.1,230.0 L176.9,230.0 L155.8,221.6 L134.6,195.1 L113.5,172.6 L92.3,149.4 L71.2,208.3 L50.0,186.5Z" fill="#D3DEE6" stroke="#9AA8B2" stroke-width="0.8"></path><path d="M50.0,186.5 L71.2,208.3 L92.3,62.0 L113.5,85.3 L134.6,107.7 L155.8,134.2 L176.9,160.2 L198.1,97.4 L219.2,123.0 L240.4,149.4 L261.5,158.3 L282.7,167.1 L303.8,177.3 L325.0,206.6 L346.2,230.0 L367.3,230.0 L388.5,230.0 L409.6,230.0 L430.8,230.0 L451.9,230.0 L473.1,230.0 L494.2,230.0 L515.4,230.0 L536.5,230.0 L557.7,230.0 L578.8,230.0 L600.0,230.0 L600.0,230.0 L578.8,230.0 L557.7,230.0 L536.5,230.0 L515.4,230.0 L494.2,230.0 L473.1,230.0 L451.9,230.0 L430.8,230.0 L409.6,230.0 L388.5,230.0 L367.3,230.0 L346.2,230.0 L325.0,230.0 L303.8,230.0 L282.7,230.0 L261.5,230.0 L240.4,230.0 L219.2,210.4 L198.1,184.8 L176.9,160.2 L155.8,134.2 L134.6,107.7 L113.5,85.3 L92.3,62.0 L71.2,208.3 L50.0,186.5Z" fill="#E9F2F7" stroke="#9AA8B2" stroke-width="0.8"></path><path d="M50.0,186.5 L71.2,208.3 L92.3,62.0 L113.5,85.3 L134.6,107.7 L155.8,134.2 L176.9,160.2 L198.1,97.4 L219.2,123.0 L240.4,149.4 L261.5,158.3 L282.7,167.1 L303.8,177.3 L325.0,31.6 L346.2,58.0 L367.3,85.4 L388.5,114.8 L409.6,144.3 L430.8,174.9 L451.9,206.5 L473.1,230.0 L494.2,230.0 L515.4,230.0 L536.5,230.0 L557.7,230.0 L578.8,230.0 L600.0,230.0 L600.0,230.0 L578.8,230.0 L557.7,230.0 L536.5,230.0 L515.4,230.0 L494.2,230.0 L473.1,230.0 L451.9,230.0 L430.8,230.0 L409.6,230.0 L388.5,230.0 L367.3,230.0 L346.2,230.0 L325.0,206.6 L303.8,177.3 L282.7,167.1 L261.5,158.3 L240.4,149.4 L219.2,123.0 L198.1,97.4 L176.9,160.2 L155.8,134.2 L134.6,107.7 L113.5,85.3 L92.3,62.0 L71.2,208.3 L50.0,186.5Z" fill="#36B7F6" fill-opacity="0.14" stroke="#0A6FA6" stroke-width="1.5" stroke-dasharray="5 3"></path>
+          <line x1="50" y1="44.6" x2="600" y2="44.6" stroke="#142933" stroke-width="1.2" stroke-dasharray="2 3"></line>
+          <text x="598" y="40" font-size="12" fill="#142933" text-anchor="end">Reorder point 7 945</text>
+          <line x1="50" y1="185.2" x2="600" y2="185.2" stroke="#142933" stroke-width="1.2" stroke-dasharray="8 4"></line>
+          <text x="598" y="180" font-size="12" fill="#142933" text-anchor="end">Safety stock 1 922</text>
+          <line x1="50" y1="186.5" x2="91.0" y2="230" stroke="#EF4444" stroke-width="2" stroke-dasharray="4 3"></line>
+          <text x="95" y="222" font-size="12" font-weight="600" fill="#8E1B12">out ≈ 11-01 if both POs slip</text>
+          <path d="M50.0 12 l5 7 -5 7 -5 -7z" fill="#FFFFFF" stroke="#142933" stroke-width="1.3"></path><path d="M80.2 12 l5 7 -5 7 -5 -7z" fill="#142933"></path><path d="M71.2 12 l5 7 -5 7 -5 -7z" fill="#FFFFFF" stroke="#142933" stroke-width="1.3"></path><path d="M86.3 12 l5 7 -5 7 -5 -7z" fill="#142933"></path><path d="M161.8 12 l5 7 -5 7 -5 -7z" fill="#FFFFFF" stroke="#142933" stroke-width="1.3"></path><path d="M176.9 12 l5 7 -5 7 -5 -7z" fill="#142933"></path><path d="M297.8 12 l5 7 -5 7 -5 -7z" fill="#FFFFFF" stroke="#0A6FA6" stroke-width="1.3"></path><path d="M312.9 12 l5 7 -5 7 -5 -7z" fill="#0A6FA6"></path>
+          <line x1="50" y1="230" x2="600" y2="230" stroke="#9AA8B2"></line>
+          <g font-size="12" fill="#666666" text-anchor="middle"><text x="50" y="248">W43</text><text x="135" y="248">W47</text><text x="219" y="248">W51</text><text x="304" y="248">W02</text><text x="388" y="248">W06</text><text x="473" y="248">W10</text><text x="558" y="248">W14</text></g>
+        </svg>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: #45525B"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; background: #22394A; border: 1px solid #9AA8B2; box-sizing: border-box"></span>Lot <span class="mono">L020-0021</span></span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; background: #6F8796; border: 1px solid #9AA8B2; box-sizing: border-box"></span>Lot <span class="mono">L020-0022</span></span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; background: #B4C6D3; border: 1px solid #9AA8B2; box-sizing: border-box"></span><span class="mono">PO-26-1145</span></span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; background: #D3DEE6; border: 1px solid #9AA8B2; box-sizing: border-box"></span><span class="mono">-1146</span></span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; background: #E9F2F7; border: 1px solid #9AA8B2; box-sizing: border-box"></span><span class="mono">-1147</span></span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border: 1.5px dashed #0A6FA6; box-sizing: border-box"></span>Proposed order</span><span style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1l4.5 5L6 11 1.5 6z" fill="#FFFFFF" stroke="#142933"></path></svg>promised</span><span style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1l4.5 5L6 11 1.5 6z" fill="#142933"></path></svg>realistic (Octane history)</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <h3 style="margin: 0; font-size: 16px; font-weight: 500">Lots and open orders</h3>
+        <table class="t mt"><thead><tr><th>Reference</th><th class="r">Qty</th><th>Promised</th><th>Realistic</th><th>Expires</th></tr></thead><tbody><tr><td class="mono">L020-0021</td><td class="r">1 002<span class="u">u</span></td><td class="mono">on hand</td><td>—</td><td class="mono">2027-08-10</td></tr><tr><td class="mono">L020-0022</td><td class="r">860<span class="u">u</span></td><td class="mono">on hand</td><td>—</td><td class="mono">2027-09-09</td></tr><tr><td class="mono">PO-26-1145</td><td class="r">3 456<span class="u">u</span></td><td class="mono">2026-10-12</td><td><span class="mono" style="color: #8E1B12; font-weight: 500">≥ 2026-10-29</span></td><td class="mono">—</td></tr><tr><td class="mono">PO-26-1146</td><td class="r">3 744<span class="u">u</span></td><td class="mono">2026-10-26</td><td><span class="mono">2026-10-31</span></td><td class="mono">—</td></tr><tr><td class="mono">PO-26-1147</td><td class="r">3 744<span class="u">u</span></td><td class="mono">2026-11-25</td><td><span class="mono">2026-11-30</span></td><td class="mono">—</td></tr></tbody></table>
+      </div>
+      <div class="act">
+        <div style="display: flex; gap: 10px; align-items: flex-start">
+          <span style="flex: none"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Act now</span></span>
+          <span style="font-size: 15px; line-height: 1.4">Get a ship date for <span class="mono">PO-26-1145</span> today: without it and <span class="mono">-1146</span>, stock runs out around 2026-11-01. Then order ≈ 7 500 u by 2026-11-28 (≈ 69 k CHF); add London's 804 u to the same order.</span>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end"><button class="btn">Draft next order</button><button class="btn btn-p">Escalate with Octane</button></div>
+      </div>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

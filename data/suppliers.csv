@@ -1,0 +1,16 @@
+supplier_id,supplier_name,country,currency,incoterm,cold_chain_capable,ordering_channel,payment_terms_days,notes
+S01,Helix Genomics,US,USD,DAP,Y,api,30,Main gene-fragment vendor
+S02,Codon Forge,DE,EUR,DAP,Y,email,30,Gene fragments - second source in qualification
+S03,Lysis Bio,DE,EUR,DAP,Y,portal_upload,30,E. coli lysate cell-free kits
+S04,Ribosyn Labs,US,USD,EXW,Y,email,45,Reconstituted (PURE-type) cell-free system
+S05,Octane Biosensors,US,USD,DAP,N,portal_upload,30,BLI biosensors and plates
+S06,Kinetiq Instruments,FR,EUR,DAP,Y,portal_upload,30,SPR chips and buffers
+S07,Proteo Catalog,GB,GBP,DAP,Y,api,30,Catalog target proteins (biotinylated)
+S08,Antigenix,US,USD,DAP,Y,email,30,Catalog target proteins
+S09,LabPlast Europa,DE,EUR,DAP,N,edi,60,"Plates, tips, seals"
+S10,Alpine Lab Supply,CH,CHF,DDP,Y,webshop,30,Swiss distributor - general reagents
+S11,Thames Scientific,GB,GBP,DDP,Y,webshop,30,UK distributor - plastics and reagents
+S12,Enzymatica,DK,EUR,DAP,Y,email,30,Polymerases and assembly mixes
+S13,Lumina Assays,US,USD,DAP,Y,email,30,"Detection reagents, dyes, substrates"
+S14,Chromalytix,US,USD,EXW,N,email,45,"SEC columns, CE-SDS cartridges (quote only)"
+S15,Cellfree Nordic,SE,EUR,DAP,Y,email,30,Lysate cell-free - second source in qualification

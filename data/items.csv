@@ -1,0 +1,34 @@
+item_id,description,category,uom,temp_zone,shelf_life_days,storage_liters_per_uom
+I001,"Linear gene fragment, up to 500 bp, non-clonal",DNA,fragment,-20C,365,0.0004
+I002,"Oligo pool plate, 96 primers, 25 nmol",DNA,plate,-20C,540,0.15
+I003,High-fidelity PCR master mix 2x,DNA,mL,-20C,365,0.004
+I004,DNA assembly master mix 2x,DNA,mL,-20C,270,0.004
+I005,DNA clean-up magnetic beads,DNA,mL,2-8C,365,0.002
+I010,E. coli lysate cell-free expression kit,EXPRESSION,mL,-80C,270,0.003
+I011,Cell-free energy solution + amino acids,EXPRESSION,mL,-80C,180,0.003
+I012,Reconstituted (PURE-type) cell-free system,EXPRESSION,mL,-80C,365,0.003
+I013,Disulfide bond enhancer,EXPRESSION,mL,-80C,365,0.003
+I020,"BLI biosensor, streptavidin (SA)",BINDING,each,ambient,365,0.02
+I021,"BLI biosensor, Ni-NTA",BINDING,each,ambient,365,0.02
+I022,Kinetics buffer 10x,BINDING,mL,2-8C,365,0.0012
+I023,384-well tilted-bottom plate (BLI),BINDING,plate,ambient,1825,0.3
+I024,"Biotinylated target protein, standard panel",TARGETS,ug,-80C,365,5e-05
+I030,"SPR sensor chip, streptavidin",BINDING,each,2-8C,365,0.05
+I031,SPR running buffer,BINDING,L,ambient,365,1.1
+I032,Regeneration solution,BINDING,mL,ambient,730,0.0012
+I040,Thermal shift dye 5000x,THERMO,uL,-20C,365,2e-05
+I041,384-well qPCR plate,THERMO,plate,ambient,1825,0.25
+I042,Optical adhesive seal,THERMO,each,ambient,1095,0.01
+I050,Fluorogenic substrate panel,ENZYME,mg,-20C,365,0.0005
+I051,384-well black assay plate,ENZYME,plate,ambient,1825,0.25
+I060,"UHPLC SEC column, 4.6 x 150 mm",DEVELOP,each,ambient,1095,0.3
+I061,CE-SDS capillary cartridge,DEVELOP,each,2-8C,365,0.4
+I062,SEC mobile phase buffer,DEVELOP,L,ambient,365,1.1
+I070,"384-well PCR plate, skirted",CONSUMABLE,plate,ambient,1825,0.25
+I071,"Liquid-handler tips 50 uL, filtered",CONSUMABLE,each,ambient,1825,0.0006
+I072,"Liquid-handler tips 200 uL, filtered",CONSUMABLE,each,ambient,1825,0.0009
+I073,96 deep-well plate 2 mL,CONSUMABLE,plate,ambient,1825,0.45
+I074,Foil plate seal,CONSUMABLE,each,ambient,1095,0.01
+I075,"Nitrile gloves, box of 100",CONSUMABLE,box,ambient,1825,1.0
+I080,Microfluidic protein QC cartridge (384 samples),QC,each,2-8C,365,0.2
+I081,Tag-based luminescent expression detection reagent,QC,mL,-20C,270,0.003

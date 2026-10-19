@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Supplier panel: Octane Biosensors</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0A6FA6}a:hover{color:#085A87}
+.sp{font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;color:#142933;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.sp button,.sp select,.sp input{font:inherit}
+.sp button{cursor:pointer}
+.sp h1,.sp h2{letter-spacing:-0.025em;font-weight:500}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#666666}
+.card{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px}
+.seg{display:flex;border:1px solid #C8D3DC;border-radius:8px;overflow:hidden;background:#FFFFFF}
+.seg button{height:44px;padding:0 16px;border:0;border-right:1px solid #C8D3DC;background:transparent;color:#142933;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:#36B7F6;color:#142933}
+.ib{width:44px;height:44px;border:1px solid #C8D3DC;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#142933;padding:0}
+.btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #C8D3DC;background:#FFFFFF;color:#142933;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-p{background:#36B7F6;border-color:#36B7F6;color:#142933}
+.chip{height:36px;padding:0 12px;border-radius:18px;border:1px solid #C8D3DC;background:#FFFFFF;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:#142933}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border-radius:13px;font-size:14px;font-weight:600;white-space:nowrap}
+.crit{background:#FBE7E4;color:#8E1B12}
+.warn{background:#FBF0D6;color:#6B4700}
+.ok{background:#E2F1E8;color:#1C5A3A}
+.lsn{width:10px;height:10px;background:#8855FF;border-radius:1px;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.ldn{width:11px;height:11px;background:#0F8B8D;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.mut{color:#666666}
+.u{color:#666666;font-size:13px;margin-left:3px}
+.r{text-align:right}
+.kpi{padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box;height:172px}
+.kl{font-size:15px;font-weight:500;color:#45525B}
+.kv{font-size:40px;font-weight:500;letter-spacing:-0.04em;line-height:1.1}
+.ku{font-size:18px;color:#666666;font-weight:500}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#45525B;border:1px dashed #9AA8B2;border-radius:4px;padding:2px 6px}
+.al{display:grid;grid-template-columns:132px 330px minmax(0,1fr) 150px 400px;gap:20px;align-items:center;padding:0 24px;height:86px;border-top:1px solid #E9F2F7}
+.h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-0.02em}
+.lg{display:flex;align-items:center;gap:8px;font-size:14px;color:#45525B}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px}
+table.t{border-collapse:collapse;width:100%}
+.t th{font-size:13px;font-weight:500;color:#666666;text-align:left;padding:0 10px;height:40px;border-bottom:1px solid #C8D3DC;white-space:nowrap}
+.t td{font-size:15px;padding:0 10px;height:56px;border-bottom:1px solid #E9F2F7;white-space:nowrap}
+.mt th{height:32px;padding:0 8px}.mt td{font-size:14px;height:36px;padding:0 8px}
+.ps{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid #E9F2F7;border-radius:8px}
+.pl{font-size:13px;color:#666666}
+.pv{font-size:22px;font-weight:500;letter-spacing:-0.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #E9F2F7;font-size:16px}
+.bar{position:relative;width:110px;height:8px;background:#E9F2F7;border-radius:4px}
+.bar i{position:absolute;left:0;top:0;height:8px;border-radius:4px;background:#45525B}
+.bar b{position:absolute;top:-4px;width:2px;height:16px;background:#142933}
+.act{margin-top:auto;border:1px solid #C8D3DC;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#F3F8FC}
+</style>
+</helmet>
+<aside class="sp" aria-label="Supplier detail Octane Biosensors" style="width: 680px; height: 1080px; box-sizing: border-box; background: #FFFFFF; border-left: 1px solid #C8D3DC; padding: 22px 28px; display: flex; flex-direction: column; gap: 12px; overflow: hidden">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 4px"><span class="eyebrow">Supplier · S05</span><h2 style="margin: 0; font-size: 26px">Octane Biosensors</h2>
+      <span class="mut" style="font-size: 14px">BLI biosensors and plates · US · USD · DAP · portal upload · 30 days · no contract</span></div>
+    <button class="ib" aria-label="Close panel"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></button>
+  </div>
+  <span style="align-self: flex-start"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Single source for 3 items · no second source started</span></span>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+    <div class="ps"><span class="pl">Annual spend</span><span class="pv">483 <span style="font-size: 14px">k CHF</span></span><span class="pl">2026 run rate</span></div>
+    <div class="ps"><span class="pl">Exposed</span><span class="pv">2 334 <span style="font-size: 14px">p/wk</span></span><span class="pl">all BLI proteins</span></div>
+    <div class="ps"><span class="pl">Lead time</span><span class="pv">6.7 <span style="font-size: 14px">wk</span></span><span class="pl">quoted 6.0</span></div>
+    <div class="ps" style="border-color: #F3B5B5; background: #FEF4F4"><span class="pl">On time</span><span class="pv" style="color: #8E1B12">30 %</span><span class="pl">20 POs received</span></div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; align-items: baseline"><h3 style="margin: 0; font-size: 16px; font-weight: 500">Lead time, quoted vs actual</h3><span class="mut" style="font-size: 13px">weeks · last 12 POs, by order date</span></div>
+    <svg width="624" height="210" viewBox="0 0 624 210" role="img" aria-label="Actual lead time of the last 12 Octane purchase orders against a quoted 6 weeks; actuals range from 3.7 to 8.4 weeks" style="font-family: inherit">
+      <g stroke="#E9F2F7"><line x1="40" y1="126.7" x2="610" y2="126.7"></line><line x1="40" y1="73.3" x2="610" y2="73.3"></line><line x1="40" y1="20.0" x2="610" y2="20.0"></line></g>
+      <g font-size="12" fill="#666666" text-anchor="end"><text x="32" y="184">0</text><text x="32" y="131">3</text><text x="32" y="77">6</text><text x="32" y="24">9 wk</text></g>
+      <line x1="40" y1="73.3" x2="610" y2="73.3" stroke="#142933" stroke-width="1.5" stroke-dasharray="6 4"></line>
+      <text x="606" y="89" font-size="12" fill="#142933" text-anchor="end">quoted 6.0</text>
+      <path d="M60.0,70.8 L108.0,58.1 L156.0,114.0 L204.0,68.3 L252.0,30.2 L300.0,42.9 L348.0,70.8 L396.0,37.8 L444.0,45.4 L492.0,78.4 L540.0,45.4 L588.0,73.3" fill="none" stroke="#6F8796" stroke-width="1.2"></path><circle cx="60" cy="70.8" r="4.5" fill="#142933"></circle><circle cx="108" cy="58.1" r="4.5" fill="#142933"></circle><circle cx="156" cy="114.0" r="4.5" fill="#142933"></circle><circle cx="204" cy="68.3" r="4.5" fill="#142933"></circle><circle cx="252" cy="30.2" r="4.5" fill="#142933"></circle><circle cx="300" cy="42.9" r="4.5" fill="#142933"></circle><circle cx="348" cy="70.8" r="4.5" fill="#142933"></circle><circle cx="396" cy="37.8" r="4.5" fill="#142933"></circle><circle cx="444" cy="45.4" r="4.5" fill="#142933"></circle><circle cx="492" cy="78.4" r="4.5" fill="#142933"></circle><circle cx="540" cy="45.4" r="4.5" fill="#142933"></circle><circle cx="588" cy="73.3" r="4.5" fill="#142933"></circle>
+      <line x1="40" y1="180" x2="610" y2="180" stroke="#9AA8B2"></line>
+      <g font-size="12" fill="#666666" text-anchor="middle"><text x="60" y="198">03-31</text><text x="204" y="198">05-12</text><text x="348" y="198">06-22</text><text x="492" y="198">07-20</text><text x="588" y="198">08-06</text></g>
+    </svg></div>
+  <div style="display: flex; flex-direction: column; gap: 2px"><h3 style="margin: 0; font-size: 16px; font-weight: 500">Items supplied</h3><table class="t mt"><thead><tr><th>Item</th><th class="r">Cover / lead time</th><th class="r">Use</th><th>Status</th></tr></thead><tbody><tr><td><a href="#" style="text-decoration: none"><span class="mono">I020</span> BLI biosensor, streptavidin (S</a></td><td class="r"><b>1.9</b> <span class="mut">/ 6.3 wk</span></td><td class="r">961 <span class="mut">u/wk</span></td><td><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span></td></tr><tr><td><a href="#" style="text-decoration: none"><span class="mono">I021</span> BLI biosensor, Ni-NTA</a></td><td class="r"><b>4.6</b> <span class="mut">/ 7.4 wk</span></td><td class="r">360 <span class="mut">u/wk</span></td><td><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span></td></tr><tr><td><a href="#" style="text-decoration: none"><span class="mono">I023</span> 384-well tilted-bottom plate (</a></td><td class="r"><b>9.2</b> <span class="mut">/ 6.7 wk</span></td><td class="r">25 <span class="mut">plates/wk</span></td><td><span class="st ok"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="#16A34A"></circle><path d="M4.2 7.2l1.9 1.9 3.8-4" stroke="#FFFFFF" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>OK</span></td></tr></tbody></table></div>
+  <div style="display: flex; flex-direction: column; gap: 2px"><h3 style="margin: 0; font-size: 16px; font-weight: 500">Open orders</h3><table class="t mt"><thead><tr><th>PO</th><th>Item</th><th class="r">Qty</th><th>Promised</th><th>Realistic</th></tr></thead><tbody><tr><td class="mono">PO-26-1145</td><td class="mono">I020</td><td class="r">3 456</td><td class="mono" style="color: #8E1B12; font-weight: 500">2026-10-12</td><td class="mono">≥ 2026-10-29</td></tr><tr><td class="mono">PO-26-1146</td><td class="mono">I020</td><td class="r">3 744</td><td class="mono">2026-10-26</td><td class="mono">2026-10-31</td></tr><tr><td class="mono">PO-26-1154</td><td class="mono">I021</td><td class="r">2 112</td><td class="mono">2026-10-28</td><td class="mono">2026-11-02</td></tr><tr><td class="mono">PO-26-1172</td><td class="mono">I023</td><td class="r">150</td><td class="mono">2026-10-28</td><td class="mono">2026-11-02</td></tr><tr><td class="mono">PO-26-1147</td><td class="mono">I020</td><td class="r">3 744</td><td class="mono">2026-11-25</td><td class="mono">2026-11-30</td></tr></tbody></table></div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; font-size: 14px">
+    <div class="ps"><span class="pl">Price tiers, <span class="mono">I020</span></span><span style="font-weight: 500">11.50 → 10.40 USD at 60 000 u/year</span><span class="mut">2027 volume, both sites: 102 300 u</span></div>
+    <div class="ps"><span class="pl">Second source</span><span style="font-weight: 500; color: #8E1B12">Not started</span><span class="mut">No candidate identified</span></div>
+  </div>
+  <div class="act">
+    <span style="font-size: 15px; line-height: 1.4">Every BLI protein depends on Octane, which delivers on time 3 times in 10. Ask for a 2027 agreement at the 60 000 u tier (≈ 90 k CHF/year) with a delivery-date commitment, and start a second-source search.</span>
+    <div style="display: flex; gap: 10px; justify-content: flex-end"><button class="btn">Start second-source search</button><button class="btn btn-p">Prepare 2027 agreement</button></div>
+  </div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":680,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

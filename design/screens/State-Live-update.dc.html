@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Live update</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0A6FA6}a:hover{color:#085A87}
+.sp{font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;color:#142933;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.sp button,.sp select,.sp input{font:inherit}
+.sp button{cursor:pointer}
+.sp h1,.sp h2{letter-spacing:-0.025em;font-weight:500}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#666666}
+.card{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px}
+.seg{display:flex;border:1px solid #C8D3DC;border-radius:8px;overflow:hidden;background:#FFFFFF}
+.seg button{height:44px;padding:0 16px;border:0;border-right:1px solid #C8D3DC;background:transparent;color:#142933;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:#36B7F6;color:#142933}
+.ib{width:44px;height:44px;border:1px solid #C8D3DC;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#142933;padding:0}
+.btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #C8D3DC;background:#FFFFFF;color:#142933;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-p{background:#36B7F6;border-color:#36B7F6;color:#142933}
+.chip{height:36px;padding:0 12px;border-radius:18px;border:1px solid #C8D3DC;background:#FFFFFF;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:#142933}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border-radius:13px;font-size:14px;font-weight:600;white-space:nowrap}
+.crit{background:#FBE7E4;color:#8E1B12}
+.warn{background:#FBF0D6;color:#6B4700}
+.ok{background:#E2F1E8;color:#1C5A3A}
+.lsn{width:10px;height:10px;background:#8855FF;border-radius:1px;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.ldn{width:11px;height:11px;background:#0F8B8D;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.mut{color:#666666}
+.u{color:#666666;font-size:13px;margin-left:3px}
+.r{text-align:right}
+.kpi{padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box;height:172px}
+.kl{font-size:15px;font-weight:500;color:#45525B}
+.kv{font-size:40px;font-weight:500;letter-spacing:-0.04em;line-height:1.1}
+.ku{font-size:18px;color:#666666;font-weight:500}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#45525B;border:1px dashed #9AA8B2;border-radius:4px;padding:2px 6px}
+.al{display:grid;grid-template-columns:132px 330px minmax(0,1fr) 150px 400px;gap:20px;align-items:center;padding:0 24px;height:86px;border-top:1px solid #E9F2F7}
+.h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-0.02em}
+.lg{display:flex;align-items:center;gap:8px;font-size:14px;color:#45525B}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px}
+table.t{border-collapse:collapse;width:100%}
+.t th{font-size:13px;font-weight:500;color:#666666;text-align:left;padding:0 10px;height:40px;border-bottom:1px solid #C8D3DC;white-space:nowrap}
+.t td{font-size:15px;padding:0 10px;height:56px;border-bottom:1px solid #E9F2F7;white-space:nowrap}
+.mt th{height:32px;padding:0 8px}.mt td{font-size:14px;height:36px;padding:0 8px}
+.ps{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid #E9F2F7;border-radius:8px}
+.pl{font-size:13px;color:#666666}
+.pv{font-size:22px;font-weight:500;letter-spacing:-0.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #E9F2F7;font-size:16px}
+.bar{position:relative;width:110px;height:8px;background:#E9F2F7;border-radius:4px}
+.bar i{position:absolute;left:0;top:0;height:8px;border-radius:4px;background:#45525B}
+.bar b{position:absolute;top:-4px;width:2px;height:16px;background:#142933}
+.act{margin-top:auto;border:1px solid #C8D3DC;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#F3F8FC}
+.was{font-size:14px;color:#0A6FA6;display:flex;align-items:center;gap:6px}
+@keyframes pulse{0%{opacity:1}50%{opacity:.35}100%{opacity:1}}
+.dotl{width:8px;height:8px;border-radius:50%;background:#0A6FA6;display:inline-block;animation:pulse 2s ease-in-out 3}
+</style>
+</helmet>
+<div class="sp" style="width: 1920px; height: 340px; background: #F7FBFE; display: flex; flex-direction: column; overflow: hidden">
+  <div style="height: 28px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: #EEF5FB; color: #45525B; font-size: 13px; border-bottom: 1px solid #DCE5EC">
+    <span style="display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-dasharray="2 2"></rect></svg>Synthetic data · generated for design reference, not company records</span>
+    <span class="mono" role="status" style="display: flex; align-items: center; gap: 8px"><span class="dotl"></span><span style="color: #0A6FA6; font-weight: 500">Updated 14:42:08</span> · goods receipt <span>PO-26-1145</span> · 2 figures changed</span>
+  </div>
+  <header style="height: 76px; flex: none; display: flex; align-items: center; gap: 28px; padding: 0 40px; background: #FFFFFF; border-bottom: 1px solid #DCE5EC">
+    <div style="display: flex; align-items: center; gap: 10px; width: 190px">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#142933"></rect><path d="M6 15V9M11 15V6M16 15v-4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg>
+      <span style="font-size: 17px; font-weight: 600">Supply Planner</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0">
+      <span class="eyebrow">1 · Executive summary</span>
+      <span style="font-size: 22px; font-weight: 500; letter-spacing: -0.03em">Where do we stand, and what needs a decision this month?</span>
+    </div>
+    <div class="seg" role="group" aria-label="Site">
+      <button aria-pressed="true"><span class="lsn"></span>LSN</button>
+      <button aria-pressed="false"><span class="ldn"></span>LDN</button>
+      <button aria-pressed="false">Group</button>
+    </div>
+    <nav aria-label="Views" style="display: flex; align-items: center; gap: 10px">
+      <button class="ib" aria-label="Previous view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 4L6 9l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <span class="mono" style="font-size: 15px; min-width: 44px; text-align: center">1 / 7</span>
+      <button class="ib" aria-label="Next view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M7 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    </nav>
+  </header>
+  <main style="flex: 1; padding: 28px 40px; min-height: 0">
+    <section aria-label="Key indicators" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
+<div class="card kpi"><span class="kl">Material cost / protein</span><div style="display: flex; align-items: baseline; gap: 6px"><span class="kv">50.64</span><span class="ku">CHF</span></div><span class="mut" style="font-size: 14px">BLI assay · LSN · preferred suppliers</span></div>
+<div class="card kpi" style="border-color: #0A6FA6; box-shadow: 0 0 0 1px #0A6FA6"><span class="kl">Inventory value</span><div style="display: flex; align-items: baseline; gap: 6px"><span class="kv">1.21</span><span class="ku">M CHF</span></div><span class="mut" style="font-size: 14px"><span class="was"><span class="dotl"></span>Updated 12 s ago · was 1.18</span></span><span class="mut" style="font-size: 14px">3 456 biosensors received</span></div>
+<div class="card kpi"><span class="kl">Stock at expiry risk</span><div style="display: flex; align-items: baseline; gap: 6px"><span class="kv">115</span><span class="ku">k CHF</span></div><span class="mut" style="font-size: 14px"><span class="mono">I010</span> lot <span class="mono">L010-0065</span> · 2026-11-09</span></div>
+<div class="card kpi" style="border-color: #0A6FA6; box-shadow: 0 0 0 1px #0A6FA6"><span class="kl">Items below reorder point</span><div style="display: flex; align-items: baseline; gap: 6px"><span class="kv">8</span><span class="ku">of 30 items</span></div><span class="mut" style="font-size: 14px"><span class="was"><span class="dotl"></span>Updated 12 s ago · was 9</span></span><span class="mut" style="font-size: 14px"><span class="mono">I020</span> cover 1.9 → 5.5 weeks</span></div>
+<div class="card kpi"><span class="kl">Single-source items</span><div style="display: flex; align-items: baseline; gap: 6px"><span class="kv">27</span><span class="ku">of 30 items</span></div><span class="mut" style="font-size: 14px">10 suppliers, 1 with a qualified alternate</span></div>
+<div class="card kpi"><span class="kl">Throughput</span><div style="display: flex; align-items: baseline; gap: 6px"><span class="kv">3 420</span><span class="ku">proteins/week</span></div><span class="mut" style="font-size: 14px">LSN · 4-week average</span></div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":340}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

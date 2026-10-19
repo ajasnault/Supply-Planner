@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orders and automation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0A6FA6}a:hover{color:#085A87}
+.sp{font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;color:#142933;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.sp button,.sp select,.sp input{font:inherit}
+.sp button{cursor:pointer}
+.sp h1,.sp h2{letter-spacing:-0.025em;font-weight:500}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#666666}
+.card{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px}
+.seg{display:flex;border:1px solid #C8D3DC;border-radius:8px;overflow:hidden;background:#FFFFFF}
+.seg button{height:44px;padding:0 16px;border:0;border-right:1px solid #C8D3DC;background:transparent;color:#142933;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:#36B7F6;color:#142933}
+.ib{width:44px;height:44px;border:1px solid #C8D3DC;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#142933;padding:0}
+.btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #C8D3DC;background:#FFFFFF;color:#142933;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-p{background:#36B7F6;border-color:#36B7F6;color:#142933}
+.chip{height:36px;padding:0 12px;border-radius:18px;border:1px solid #C8D3DC;background:#FFFFFF;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:#142933}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border-radius:13px;font-size:14px;font-weight:600;white-space:nowrap}
+.crit{background:#FBE7E4;color:#8E1B12}
+.warn{background:#FBF0D6;color:#6B4700}
+.ok{background:#E2F1E8;color:#1C5A3A}
+.lsn{width:10px;height:10px;background:#8855FF;border-radius:1px;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.ldn{width:11px;height:11px;background:#0F8B8D;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.mut{color:#666666}
+.u{color:#666666;font-size:13px;margin-left:3px}
+.r{text-align:right}
+.kpi{padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box;height:172px}
+.kl{font-size:15px;font-weight:500;color:#45525B}
+.kv{font-size:40px;font-weight:500;letter-spacing:-0.04em;line-height:1.1}
+.ku{font-size:18px;color:#666666;font-weight:500}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#45525B;border:1px dashed #9AA8B2;border-radius:4px;padding:2px 6px}
+.al{display:grid;grid-template-columns:132px 330px minmax(0,1fr) 150px 400px;gap:20px;align-items:center;padding:0 24px;height:86px;border-top:1px solid #E9F2F7}
+.h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-0.02em}
+.lg{display:flex;align-items:center;gap:8px;font-size:14px;color:#45525B}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px}
+table.t{border-collapse:collapse;width:100%}
+.t th{font-size:13px;font-weight:500;color:#666666;text-align:left;padding:0 10px;height:40px;border-bottom:1px solid #C8D3DC;white-space:nowrap}
+.t td{font-size:15px;padding:0 10px;height:56px;border-bottom:1px solid #E9F2F7;white-space:nowrap}
+.mt th{height:32px;padding:0 8px}.mt td{font-size:14px;height:36px;padding:0 8px}
+.ps{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid #E9F2F7;border-radius:8px}
+.pl{font-size:13px;color:#666666}
+.pv{font-size:22px;font-weight:500;letter-spacing:-0.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #E9F2F7;font-size:16px}
+.bar{position:relative;width:110px;height:8px;background:#E9F2F7;border-radius:4px}
+.bar i{position:absolute;left:0;top:0;height:8px;border-radius:4px;background:#45525B}
+.bar b{position:absolute;top:-4px;width:2px;height:16px;background:#142933}
+.act{margin-top:auto;border:1px solid #C8D3DC;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#F3F8FC}
+.chan{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:12px;font-size:13px;font-weight:600}
+.chan.auto{background:#E9F2F7;color:#0A6FA6}
+.chan.manual{background:#F3F3F3;color:#45525B}
+.ex{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #E9F2F7}
+.sc{display:flex;flex-direction:column;gap:2px;padding:12px 16px}
+.sv{font-size:28px;font-weight:500;letter-spacing:-0.03em}
+</style>
+</helmet>
+<div class="sp" style="width: 1440px; height: 1000px; background: #F7FBFE; display: flex; flex-direction: column; overflow: hidden">
+  <div style="height: 28px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; background: #EEF5FB; color: #45525B; font-size: 13px; border-bottom: 1px solid #DCE5EC">
+    <span style="display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-dasharray="2 2"></rect></svg>Synthetic data · generated for design reference, not company records</span>
+    <span class="mono">Data as of 2026-10-19 06:00 CET · import IMP-0214 · validated</span>
+  </div>
+  <header style="height: 64px; flex: none; display: flex; align-items: center; gap: 24px; padding: 0 28px; background: #FFFFFF; border-bottom: 1px solid #DCE5EC">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#142933"></rect><path d="M6 15V9M11 15V6M16 15v-4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg>
+      <span style="font-size: 16px; font-weight: 600">Supply Planner</span>
+      <span style="font-size: 12px; font-weight: 600; padding: 2px 8px; border: 1px solid #C8D3DC; border-radius: 4px; color: #45525B">ADMIN</span>
+    </div>
+    <div style="display: flex; flex-direction: column; flex: 1; min-width: 0"><span class="eyebrow" style="font-size: 12px">Orders &amp; automation</span><span style="font-size: 18px; font-weight: 500; letter-spacing: -0.02em">What needs a human today?</span></div>
+    <div class="seg" role="group" aria-label="Site"><button aria-pressed="true" style="height: 40px"><span class="lsn"></span>LSN</button><button aria-pressed="false" style="height: 40px"><span class="ldn"></span>LDN</button><button aria-pressed="false" style="height: 40px">Group</button></div>
+    <a href="#" style="font-size: 14px">Back to presentation</a>
+  </header>
+  <main style="flex: 1; padding: 20px 28px; display: flex; flex-direction: column; gap: 16px; min-height: 0">
+    <section style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px" aria-label="Order pipeline">
+      <div class="card sc"><span class="pl">Proposed by the engine</span><span class="sv">6</span><span class="pl">order-by within 14 days · 152 k CHF</span></div>
+      <div class="card sc"><span class="pl">Open POs</span><span class="sv">26</span><span class="pl">537 k CHF</span></div>
+      <div class="card sc" style="border-color: #F3B5B5"><span class="pl">Late</span><span class="sv" style="color: #8E1B12">1</span><span class="pl">PO-26-1145 · 7 days</span></div>
+      <div class="card sc"><span class="pl">Received, last 30 days</span><span class="sv">37</span><span class="pl">PO lines</span></div>
+      <div class="card sc"><span class="pl">Spend via automatic channels</span><span class="sv">45 %</span><span class="pl">API · EDI · webshop</span></div>
+    </section>
+    <section style="flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 470px; gap: 16px; min-height: 0">
+      <div class="card" style="display: flex; flex-direction: column">
+        <div style="height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px"><h2 class="h2" style="font-size: 16px">Proposed orders</h2><span class="mut" style="font-size: 13px">qty = reorder point + 2 weeks − on hand − open, full packs, MOQ</span></div>
+        <table class="t mt"><thead><tr><th style="padding-left: 16px">Item</th><th>Supplier</th><th>Channel</th><th class="r">Qty</th><th class="r">Value</th><th>Order by</th><th></th></tr></thead><tbody><tr><td style="padding-left: 16px"><span class="mono" style="font-weight: 500">I013</span> <span class="mut" style="font-size: 13px">Disulfide bond enhancer</span></td><td>Ribosyn Labs</td><td><span class="chan manual">E-mail</span></td><td class="r">1<span class="u">mL</span></td><td class="r">0.2<span class="u">k CHF</span></td><td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 12px">09-19</span></td><td class="r"><button class="btn" style="height: 34px">Make PDF</button></td></tr><tr><td style="padding-left: 16px"><span class="mono" style="font-weight: 500">I030</span> <span class="mut" style="font-size: 13px">SPR sensor chip, streptavi</span></td><td>Kinetiq Instruments</td><td><span class="chan manual">Portal upload</span></td><td class="r">3<span class="u">u</span></td><td class="r">1.2<span class="u">k CHF</span></td><td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 12px">10-04</span></td><td class="r"><button class="btn" style="height: 34px">Make PDF</button></td></tr><tr><td style="padding-left: 16px"><span class="mono" style="font-weight: 500">I024</span> <span class="mut" style="font-size: 13px">Biotinylated target protei</span></td><td>Proteo Catalog</td><td><span class="chan auto">API</span></td><td class="r">2 500<span class="u">µg</span></td><td class="r">8.6<span class="u">k CHF</span></td><td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 12px">10-15</span></td><td class="r"><button class="btn btn-p" style="height: 34px">Send</button></td></tr><tr><td style="padding-left: 16px"><span class="mono" style="font-weight: 500">I001</span> <span class="mut" style="font-size: 13px">Linear gene fragment, up t</span></td><td>Helix Genomics</td><td><span class="chan auto">API</span></td><td class="r">8 640<span class="u">u</span></td><td class="r">132.9<span class="u">k CHF</span></td><td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 12px">10-16</span></td><td class="r"><button class="btn btn-p" style="height: 34px">Send</button></td></tr><tr><td style="padding-left: 16px"><span class="mono" style="font-weight: 500">I021</span> <span class="mut" style="font-size: 13px">BLI biosensor, Ni-NTA</span></td><td>Octane Biosensors</td><td><span class="chan manual">Portal upload</span></td><td class="r">480<span class="u">u</span></td><td class="r">4.7<span class="u">k CHF</span></td><td><span style="color: #8E1B12; font-weight: 600">Overdue</span> <span class="mono mut" style="font-size: 12px">10-16</span></td><td class="r"><button class="btn" style="height: 34px">Make PDF</button></td></tr><tr><td style="padding-left: 16px"><span class="mono" style="font-weight: 500">I011</span> <span class="mut" style="font-size: 13px">Cell-free energy solution </span></td><td>Lysis Bio</td><td><span class="chan manual">Portal upload</span></td><td class="r">50<span class="u">mL</span></td><td class="r">4.0<span class="u">k CHF</span></td><td><span class="mono">2026-10-25</span></td><td class="r"><button class="btn" style="height: 34px">Make PDF</button></td></tr></tbody></table>
+        <div style="margin-top: auto; padding: 14px 16px; border-top: 1px solid #E9F2F7; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; font-weight: 500">Spend by ordering channel</span><span class="mut" style="font-size: 13px">5.3 M CHF/year · blue = can be sent automatically</span></div>
+          <svg width="900" height="26" viewBox="0 0 900 26" role="img" aria-label="Spend by channel: API 42 %, E-mail 21 %, Webshop 1 %, Portal upload 34 %, EDI 2 %"><rect x="0.0" y="0" width="377.1" height="26" fill="#0A6FA6"></rect><text x="8.0" y="18" font-size="13" font-weight="600" fill="#FFFFFF">API 42 %</text><rect x="379.1" y="0" width="15.0" height="26" fill="#36B7F6"></rect><rect x="396.1" y="0" width="2.6" height="26" fill="#9ED8F8"></rect><rect x="400.7" y="0" width="304.2" height="26" fill="#6F8796"></rect><text x="408.7" y="18" font-size="13" font-weight="600" fill="#FFFFFF">Portal upload 34 %</text><rect x="707.0" y="0" width="191.0" height="26" fill="#B4C6D3"></rect><text x="715.0" y="18" font-size="13" font-weight="600" fill="#142933">E-mail 21 %</text></svg>
+          <span class="mut" style="font-size: 13px">Biggest manual flows: Lysis Bio and Octane (portal upload), Ribosyn and Enzymatica (e-mail).</span>
+        </div>
+      </div>
+      <div class="card" style="padding: 12px 18px; display: flex; flex-direction: column">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 6px"><h2 class="h2" style="font-size: 16px">Exceptions</h2><span class="mut" style="font-size: 13px">6 open · everything else runs on its own</span></div>
+        <div class="ex"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 15px; font-weight: 500"><span class="mono">PO-26-1145</span> 7 days late</span><span class="mut" style="font-size: 13px">Octane · 3 456 × I020 · portal has no ship date</span></div><a href="#" style="font-size: 14px; white-space: nowrap">Chase on portal</a></div><div class="ex"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>Critical</span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 15px; font-weight: 500">Lot <span class="mono">L024-0066</span> expired, still available</span><span class="mut" style="font-size: 13px">I024 · 2 600 µg · expired 2026-10-02</span></div><a href="#" style="font-size: 14px; white-space: nowrap">Quarantine</a></div><div class="ex"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 15px; font-weight: 500">Count gap <span class="mono">I011</span> −18 %</span><span class="mut" style="font-size: 13px">265.9 mL counted vs 324.3 mL in system · −4.4 k CHF</span></div><a href="#" style="font-size: 14px; white-space: nowrap">Recount, then adjust</a></div><div class="ex"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 15px; font-weight: 500">LabPlast price list 2027 to map</span><span class="mut" style="font-size: 13px">8 SKUs · +4 to +6 % vs contract C-2026-02 from 01-01</span></div><a href="#" style="font-size: 14px; white-space: nowrap">Review mapping</a></div><div class="ex"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 15px; font-weight: 500">Helix contract ends 2026-12-31</span><span class="mut" style="font-size: 13px">C-2026-01 · tier pricing on fragments</span></div><a href="#" style="font-size: 14px; white-space: nowrap">Start renewal</a></div><div class="ex"><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Watch</span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 15px; font-weight: 500">Lysis Bio bought at list price</span><span class="mut" style="font-size: 13px">No contract · 1.74 M CHF/year · portal upload</span></div><a href="#" style="font-size: 14px; white-space: nowrap">Open negotiation</a></div>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

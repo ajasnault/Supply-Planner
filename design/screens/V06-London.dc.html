@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>London go-live</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0A6FA6}a:hover{color:#085A87}
+.sp{font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;color:#142933;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.sp button,.sp select,.sp input{font:inherit}
+.sp button{cursor:pointer}
+.sp h1,.sp h2{letter-spacing:-0.025em;font-weight:500}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#666666}
+.card{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px}
+.seg{display:flex;border:1px solid #C8D3DC;border-radius:8px;overflow:hidden;background:#FFFFFF}
+.seg button{height:44px;padding:0 16px;border:0;border-right:1px solid #C8D3DC;background:transparent;color:#142933;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:#36B7F6;color:#142933}
+.ib{width:44px;height:44px;border:1px solid #C8D3DC;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#142933;padding:0}
+.btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #C8D3DC;background:#FFFFFF;color:#142933;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-p{background:#36B7F6;border-color:#36B7F6;color:#142933}
+.chip{height:36px;padding:0 12px;border-radius:18px;border:1px solid #C8D3DC;background:#FFFFFF;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:#142933}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border-radius:13px;font-size:14px;font-weight:600;white-space:nowrap}
+.crit{background:#FBE7E4;color:#8E1B12}
+.warn{background:#FBF0D6;color:#6B4700}
+.ok{background:#E2F1E8;color:#1C5A3A}
+.lsn{width:10px;height:10px;background:#8855FF;border-radius:1px;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.ldn{width:11px;height:11px;background:#0F8B8D;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.mut{color:#666666}
+.u{color:#666666;font-size:13px;margin-left:3px}
+.r{text-align:right}
+.kpi{padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box;height:172px}
+.kl{font-size:15px;font-weight:500;color:#45525B}
+.kv{font-size:40px;font-weight:500;letter-spacing:-0.04em;line-height:1.1}
+.ku{font-size:18px;color:#666666;font-weight:500}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#45525B;border:1px dashed #9AA8B2;border-radius:4px;padding:2px 6px}
+.al{display:grid;grid-template-columns:132px 330px minmax(0,1fr) 150px 400px;gap:20px;align-items:center;padding:0 24px;height:86px;border-top:1px solid #E9F2F7}
+.h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-0.02em}
+.lg{display:flex;align-items:center;gap:8px;font-size:14px;color:#45525B}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px}
+table.t{border-collapse:collapse;width:100%}
+.t th{font-size:13px;font-weight:500;color:#666666;text-align:left;padding:0 10px;height:40px;border-bottom:1px solid #C8D3DC;white-space:nowrap}
+.t td{font-size:15px;padding:0 10px;height:56px;border-bottom:1px solid #E9F2F7;white-space:nowrap}
+.mt th{height:32px;padding:0 8px}.mt td{font-size:14px;height:36px;padding:0 8px}
+.ps{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid #E9F2F7;border-radius:8px}
+.pl{font-size:13px;color:#666666}
+.pv{font-size:22px;font-weight:500;letter-spacing:-0.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #E9F2F7;font-size:16px}
+.bar{position:relative;width:110px;height:8px;background:#E9F2F7;border-radius:4px}
+.bar i{position:absolute;left:0;top:0;height:8px;border-radius:4px;background:#45525B}
+.bar b{position:absolute;top:-4px;width:2px;height:16px;background:#142933}
+.act{margin-top:auto;border:1px solid #C8D3DC;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#F3F8FC}
+.cb{display:grid;grid-template-columns:120px minmax(0,1fr) 90px;align-items:center;gap:12px;font-size:15px;height:36px}
+.trk{position:relative;height:16px;background:#EAF1F7;border-radius:3px}
+.trk i{position:absolute;left:0;top:0;height:16px;border-radius:3px;background:#0F8B8D}
+.nc{display:flex;flex-direction:column;gap:4px;padding:8px 0;border-top:1px solid #E9F2F7}
+</style>
+</helmet>
+<div class="sp" style="width: 1920px; height: 1080px; background: #F7FBFE; display: flex; flex-direction: column; overflow: hidden">
+  <div style="height: 28px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: #EEF5FB; color: #45525B; font-size: 13px; border-bottom: 1px solid #DCE5EC">
+    <span style="display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-dasharray="2 2"></rect></svg>Synthetic data · generated for design reference, not company records</span>
+    <span class="mono">Data as of 2026-10-19 06:00 CET · import IMP-0214 · validated</span>
+  </div>
+  <header style="height: 76px; flex: none; display: flex; align-items: center; gap: 28px; padding: 0 40px; background: #FFFFFF; border-bottom: 1px solid #DCE5EC">
+    <div style="display: flex; align-items: center; gap: 10px; width: 190px">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#142933"></rect><path d="M6 15V9M11 15V6M16 15v-4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg>
+      <span style="font-size: 17px; font-weight: 600">Supply Planner</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0">
+      <span class="eyebrow">6 · London go-live</span>
+      <span style="font-size: 22px; font-weight: 500; letter-spacing: -0.03em">What must we order, and for how much, to open London on 11 January?</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: flex-end; padding-right: 8px">
+      <span style="font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1">84 days</span>
+      <span class="mut" style="font-size: 13px">to go-live · <span class="mono">2027-01-11</span></span>
+    </div>
+    <div class="seg" role="group" aria-label="Site">
+      <button aria-pressed="false"><span class="lsn"></span>LSN</button>
+      <button aria-pressed="true"><span class="ldn"></span>LDN</button>
+      <button aria-pressed="false">Group</button>
+    </div>
+    <nav aria-label="Views" style="display: flex; align-items: center; gap: 10px">
+      <button class="ib" aria-label="Previous view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 4L6 9l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <span class="mono" style="font-size: 15px; min-width: 44px; text-align: center">6 / 7</span>
+      <button class="ib" aria-label="Next view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M7 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    </nav>
+  </header>
+  <main style="flex: 1; padding: 24px 40px; display: flex; flex-direction: column; gap: 20px; min-height: 0">
+    <section class="card" aria-label="Orders to place before go-live" style="padding: 16px 24px 8px; display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div style="display: flex; align-items: baseline; gap: 12px"><h2 class="h2">Orders to place, at their latest order date</h2><span class="mut" style="font-size: 14px">9 supplier orders · 0 placed · 6 weeks of demand on site by 2027-01-04</span></div>
+        <div style="display: flex; gap: 18px; font-size: 13px; color: #45525B">
+          <span style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1l4.5 5L6 11 1.5 6z" fill="#142933"></path></svg>Order by</span>
+          <span style="display: flex; align-items: center; gap: 6px"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true"><defs><pattern id="l6lgl" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#EAF1F7"></rect><line x1="0" y1="0" x2="0" y2="5" stroke="#AFBDC8" stroke-width="1.5"></line></pattern></defs><rect width="22" height="12" fill="url(#l6lgl)"></rect></svg>Quoted lead time</span>
+          <span style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>No qualified source</span>
+        </div>
+      </div>
+      <svg width="1790" height="440" viewBox="0 0 1790 440" role="img" aria-label="Orders to place for London, one bar per supplier from its latest order date to on-site date 2027-01-04. First is Octane Biosensors by 2026-11-23. Kinetics buffer I022 has no qualified UK source." style="font-family: inherit">
+        <defs><pattern id="l6lt" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#EAF1F7"></rect><line x1="0" y1="0" x2="0" y2="8" stroke="#C8D3DC" stroke-width="2"></line></pattern>
+        <pattern id="l6no" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="6" height="6" fill="#FBE7E4"></rect><line x1="0" y1="0" x2="0" y2="6" stroke="#EF4444" stroke-width="1.2"></line></pattern></defs>
+        <rect x="1320" y="18" width="220" height="382" fill="#FFBB00" fill-opacity="0.10"></rect>
+        <text x="1430" y="14" font-size="12" fill="#6B4700" text-anchor="middle">holidays · ≈ 35 % capacity</text>
+        <g font-size="13" fill="#666666"><line x1="534" y1="18" x2="534" y2="400" stroke="#E9F2F7"></line><text x="534" y="424" text-anchor="middle">Nov</text><line x1="1006" y1="18" x2="1006" y2="400" stroke="#E9F2F7"></line><text x="1006" y="424" text-anchor="middle">Dec</text><line x1="1493" y1="18" x2="1493" y2="400" stroke="#E9F2F7"></line><text x="1493" y="424" text-anchor="middle">Jan 2027</text></g>
+        <line x1="1540" y1="18" x2="1540" y2="400" stroke="#0F8B8D" stroke-dasharray="4 3"></line>
+        <text x="1536" y="424" font-size="12" fill="#0F8B8D" text-anchor="end">on site 01-04</text>
+        <line x1="1650" y1="8" x2="1650" y2="400" stroke="#0F8B8D" stroke-width="2.5"></line>
+        <text x="1656" y="424" font-size="13" font-weight="600" fill="#142933">Go-live 01-11</text>
+        <line x1="330" y1="8" x2="330" y2="400" stroke="#0A6FA6" stroke-width="2"></line><text x="336" y="14" font-size="13" font-weight="600" fill="#0A6FA6">Today</text>
+        <text x="0" y="45" font-size="14" fill="#142933" font-weight="500">Octane Biosensors</text><text x="0" y="61" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I020 · I021 · I023</text><rect x="880" y="36" width="660" height="20" fill="url(#l6lt)"></rect><path d="M880 35 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="868" y="51" font-size="13" fill="#45525B" text-anchor="end">by 11-23 · 42 d · 11.3 k CHF</text><text x="0" y="82" font-size="14" fill="#142933" font-weight="500">Ribosyn Labs</text><text x="0" y="98" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I012 · I013</text><rect x="990" y="73" width="550" height="20" fill="url(#l6lt)"></rect><path d="M990 72 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="978" y="88" font-size="13" fill="#45525B" text-anchor="end">by 11-30 · 35 d · 13.2 k CHF</text><text x="0" y="119" font-size="14" fill="#142933" font-weight="500">Lysis Bio</text><text x="0" y="135" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I010 · I011</text><rect x="1210" y="110" width="330" height="20" fill="url(#l6lt)"></rect><path d="M1210 109 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="1198" y="125" font-size="13" fill="#45525B" text-anchor="end">by 12-14 · 21 d · 30.6 k CHF</text><text x="0" y="156" font-size="14" fill="#142933" font-weight="500">Lumina Assays</text><text x="0" y="172" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I080 · I081</text><rect x="1210" y="147" width="330" height="20" fill="url(#l6lt)"></rect><path d="M1210 146 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="1198" y="162" font-size="13" fill="#45525B" text-anchor="end">by 12-14 · 21 d · 3.1 k CHF</text><text x="0" y="193" font-size="14" fill="#142933" font-weight="500">LabPlast Europa</text><text x="0" y="209" font-size="12" fill="#666666" font-family="Geist Mono, monospace">5 items</text><rect x="1351" y="184" width="189" height="20" fill="url(#l6lt)"></rect><path d="M1351 183 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="1339" y="199" font-size="13" fill="#6B4700" text-anchor="end" font-weight="600">by 12-23 · 12 d · 1.1 k CHF · in holiday window</text><text x="0" y="230" font-size="14" fill="#142933" font-weight="500">Helix Genomics</text><text x="0" y="246" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I001 · I002</text><rect x="1383" y="221" width="157" height="20" fill="url(#l6lt)"></rect><path d="M1383 220 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="1371" y="236" font-size="13" fill="#6B4700" text-anchor="end" font-weight="600">by 12-25 · 10 d · 47.5 k CHF · in holiday window</text><text x="0" y="267" font-size="14" fill="#142933" font-weight="500">Proteo Catalog</text><text x="0" y="283" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I024</text><rect x="1383" y="258" width="157" height="20" fill="url(#l6lt)"></rect><path d="M1383 257 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="1371" y="273" font-size="13" fill="#6B4700" text-anchor="end" font-weight="600">by 12-25 · 10 d · 3.5 k CHF · in holiday window</text><text x="0" y="304" font-size="14" fill="#142933" font-weight="500">Enzymatica</text><text x="0" y="320" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I003 · I004</text><rect x="1399" y="295" width="141" height="20" fill="url(#l6lt)"></rect><path d="M1399 294 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="1387" y="310" font-size="13" fill="#6B4700" text-anchor="end" font-weight="600">by 12-26 · 9 d · 7.9 k CHF · in holiday window</text><text x="0" y="341" font-size="14" fill="#142933" font-weight="500">Thames Scientific</text><text x="0" y="357" font-size="12" fill="#666666" font-family="Geist Mono, monospace">I005 · I075</text><rect x="1493" y="332" width="47" height="20" fill="url(#l6lt)"></rect><path d="M1493 331 l8 11 -8 11 -8 -11z" fill="#142933"></path><text x="1481" y="347" font-size="13" fill="#6B4700" text-anchor="end" font-weight="600">by 01-01 · 3 d · 0.1 k CHF · in holiday window</text><text x="0" y="378" font-size="14" fill="#142933" font-weight="500"><tspan font-family="Geist Mono, monospace">I022</tspan> Kinetics buffer 10x</text><text x="0" y="394" font-size="12" fill="#8E1B12">no qualified UK source</text><rect x="330" y="369" width="1100" height="20" fill="url(#l6no)"></rect><path d="M1425 369 h8 l5 5 v8 l-5 5 h-8 l-5 -5 v-8z" fill="#EF4444"></path><text x="1444" y="384" font-size="13" font-weight="600" fill="#8E1B12">Thames Scientific not started · 3-day lead time once qualified</text>
+        <line x1="330" y1="400" x2="1760" y2="400" stroke="#9AA8B2"></line>
+      </svg>
+    </section>
+    <section style="flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; min-height: 0">
+      <div class="card" style="padding: 16px 22px; display: flex; flex-direction: column; gap: 10px">
+        <h2 class="h2">Cash tied up in initial stock</h2>
+        <div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 36px; font-weight: 500; letter-spacing: -0.04em">118 k CHF</span><span class="mut" style="font-size: 16px">≈ 109 k GBP · landed · 0 committed</span></div>
+        <svg width="560" height="22" viewBox="0 0 560 22" role="img" aria-label="By category, k CHF: DNA 55.5 · Expression 43.8 · Binding 11.3 · Targets 3.5 · QC 3.1 · Consumables 1.2"><rect x="0.0" y="0" width="261.5" height="22" fill="#22394A"></rect><rect x="262.5" y="0" width="206.4" height="22" fill="#47606F"></rect><rect x="469.9" y="0" width="52.5" height="22" fill="#6F8796"></rect><rect x="523.4" y="0" width="15.5" height="22" fill="#90A4B2"></rect><rect x="539.8" y="0" width="13.5" height="22" fill="#B4C6D3"></rect><rect x="554.3" y="0" width="4.7" height="22" fill="#D3DEE6"></rect></svg>
+        <span class="mut" style="font-size: 13px">k CHF · DNA 55.5 · Expression 43.8 · Binding 11.3 · Targets 3.5 · QC 3.1 · Consumables 1.2</span>
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 4px"><span style="font-size: 14px; font-weight: 500; color: #45525B">Orders by month</span><div class="cb" style="grid-template-columns: 80px minmax(0, 1fr) 70px"><span>Nov</span><div class="trk"><i style="width: 26%; background: #45525B"></i></div><span style="text-align: right">24.5 k</span></div><div class="cb" style="grid-template-columns: 80px minmax(0, 1fr) 70px"><span>Dec</span><div class="trk"><i style="width: 100%; background: #45525B"></i></div><span style="text-align: right">93.7 k</span></div><div class="cb" style="grid-template-columns: 80px minmax(0, 1fr) 70px"><span>Jan</span><div class="trk"><i style="width: 0%; background: #45525B"></i></div><span style="text-align: right">0.1 k</span></div></div>
+        <div style="margin-top: auto; display: flex; justify-content: flex-end"><button class="btn">Send to finance review</button></div>
+      </div>
+      <div class="card" style="padding: 16px 22px; display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline"><h2 class="h2">Storage at go-live</h2><span class="st ok"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="#16A34A"></circle><path d="M4.2 7.2l1.9 1.9 3.8-4" stroke="#FFFFFF" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>No constraint</span></div>
+        <div class="cb"><span>−80 °C</span><div class="trk"><i style="width: 0.6%"></i></div><span style="text-align: right">0.0 %</span></div><span class="mut" style="font-size: 13px; margin: -6px 0 2px 132px">0.5 of 1 200 L</span><div class="cb"><span>−20 °C</span><div class="trk"><i style="width: 0.6%"></i></div><span style="text-align: right">0.6 %</span></div><span class="mut" style="font-size: 13px; margin: -6px 0 2px 132px">5.2 of 900 L</span><div class="cb"><span>2–8 °C</span><div class="trk"><i style="width: 0.6%"></i></div><span style="text-align: right">0.1 %</span></div><span class="mut" style="font-size: 13px; margin: -6px 0 2px 132px">2.2 of 1 500 L</span><div class="cb"><span>Ambient</span><div class="trk"><i style="width: 0.6%"></i></div><span style="text-align: right">0.3 %</span></div><span class="mut" style="font-size: 13px; margin: -6px 0 2px 132px">67.8 of 25 000 L</span>
+        <span class="mut" style="font-size: 13px; margin-top: auto">LSN −80 °C is at 69 % today (1 650 of 2 400 L) while its volume doubles by mid-2027.</span>
+      </div>
+      <div class="card" style="padding: 16px 22px; display: flex; flex-direction: column">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px"><h2 class="h2">Not covered for London</h2><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>2 items</span></div>
+        <div class="nc">
+          <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; font-weight: 600"><span class="mono">I022</span> Kinetics buffer 10x</span><span class="mono mut" style="font-size: 13px">needed 01-11</span></div>
+          <span class="mut" style="font-size: 14px">BLI from day one · Alpine Lab Supply ships to LSN only · Thames Scientific not started</span>
+          <div style="display: flex; gap: 8px"><button class="btn" style="height: 36px">Ship from LSN (CH→GB)</button><button class="btn btn-p" style="height: 36px">Qualify Thames</button></div>
+        </div>
+        <div class="nc">
+          <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; font-weight: 600"><span class="mono">I032</span> Regeneration solution</span><span class="mono mut" style="font-size: 13px">needed 2027-07-01</span></div>
+          <span class="mut" style="font-size: 14px">SPR opens at LDN in July · only source is Alpine Lab Supply, LSN only</span>
+          <div style="display: flex; gap: 8px"><button class="btn btn-p" style="height: 36px">Find UK source</button></div>
+        </div>
+        <div class="nc">
+          <span style="font-size: 14px; font-weight: 600">Landed cost to London</span>
+          <span class="mut" style="font-size: 14px">US→GB adds 2 % duty and 4 % freight; frozen shipments cost 450 GBP (US) or 190 GBP (EU) each.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

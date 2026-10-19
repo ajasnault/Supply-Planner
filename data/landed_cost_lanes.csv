@@ -1,0 +1,9 @@
+origin_region,dest_site,freight_pct_of_value,cold_chain_fee_frozen_per_shipment,cold_chain_fee_chilled_per_shipment,customs_broker_fee_per_shipment,duty_pct,import_vat_pct,vat_recoverable,fee_currency,notes
+US,LSN,0.04,480,260,85,0.0,0.081,Y,CHF,"import - assumptions to verify (rates, origin rules, broker)"
+EU,LSN,0.025,210,120,60,0.0,0.081,Y,CHF,"import - assumptions to verify (rates, origin rules, broker)"
+CH,LSN,0.0,0,0,0,0.0,0.081,Y,CHF,domestic
+GB,LSN,0.03,260,150,70,0.0,0.081,Y,CHF,"import - assumptions to verify (rates, origin rules, broker)"
+US,LDN,0.04,450,240,75,0.02,0.2,Y,GBP,"import - assumptions to verify (rates, origin rules, broker)"
+EU,LDN,0.025,190,110,65,0.0,0.2,Y,GBP,"import - assumptions to verify (rates, origin rules, broker)"
+CH,LDN,0.03,240,140,70,0.0,0.2,Y,GBP,"import - assumptions to verify (rates, origin rules, broker)"
+GB,LDN,0.0,0,0,0,0.0,0.2,Y,GBP,domestic

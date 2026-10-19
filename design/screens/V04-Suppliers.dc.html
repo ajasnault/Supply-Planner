@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Supplier risk</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0A6FA6}a:hover{color:#085A87}
+.sp{font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;color:#142933;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.sp button,.sp select,.sp input{font:inherit}
+.sp button{cursor:pointer}
+.sp h1,.sp h2{letter-spacing:-0.025em;font-weight:500}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#666666}
+.card{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px}
+.seg{display:flex;border:1px solid #C8D3DC;border-radius:8px;overflow:hidden;background:#FFFFFF}
+.seg button{height:44px;padding:0 16px;border:0;border-right:1px solid #C8D3DC;background:transparent;color:#142933;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:#36B7F6;color:#142933}
+.ib{width:44px;height:44px;border:1px solid #C8D3DC;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#142933;padding:0}
+.btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #C8D3DC;background:#FFFFFF;color:#142933;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-p{background:#36B7F6;border-color:#36B7F6;color:#142933}
+.chip{height:36px;padding:0 12px;border-radius:18px;border:1px solid #C8D3DC;background:#FFFFFF;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:#142933}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border-radius:13px;font-size:14px;font-weight:600;white-space:nowrap}
+.crit{background:#FBE7E4;color:#8E1B12}
+.warn{background:#FBF0D6;color:#6B4700}
+.ok{background:#E2F1E8;color:#1C5A3A}
+.lsn{width:10px;height:10px;background:#8855FF;border-radius:1px;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.ldn{width:11px;height:11px;background:#0F8B8D;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.mut{color:#666666}
+.u{color:#666666;font-size:13px;margin-left:3px}
+.r{text-align:right}
+.kpi{padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box;height:172px}
+.kl{font-size:15px;font-weight:500;color:#45525B}
+.kv{font-size:40px;font-weight:500;letter-spacing:-0.04em;line-height:1.1}
+.ku{font-size:18px;color:#666666;font-weight:500}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#45525B;border:1px dashed #9AA8B2;border-radius:4px;padding:2px 6px}
+.al{display:grid;grid-template-columns:132px 330px minmax(0,1fr) 150px 400px;gap:20px;align-items:center;padding:0 24px;height:86px;border-top:1px solid #E9F2F7}
+.h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-0.02em}
+.lg{display:flex;align-items:center;gap:8px;font-size:14px;color:#45525B}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px}
+table.t{border-collapse:collapse;width:100%}
+.t th{font-size:13px;font-weight:500;color:#666666;text-align:left;padding:0 10px;height:40px;border-bottom:1px solid #C8D3DC;white-space:nowrap}
+.t td{font-size:15px;padding:0 10px;height:56px;border-bottom:1px solid #E9F2F7;white-space:nowrap}
+.mt th{height:32px;padding:0 8px}.mt td{font-size:14px;height:36px;padding:0 8px}
+.ps{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid #E9F2F7;border-radius:8px}
+.pl{font-size:13px;color:#666666}
+.pv{font-size:22px;font-weight:500;letter-spacing:-0.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #E9F2F7;font-size:16px}
+.bar{position:relative;width:110px;height:8px;background:#E9F2F7;border-radius:4px}
+.bar i{position:absolute;left:0;top:0;height:8px;border-radius:4px;background:#45525B}
+.bar b{position:absolute;top:-4px;width:2px;height:16px;background:#142933}
+.act{margin-top:auto;border:1px solid #C8D3DC;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#F3F8FC}
+.col{display:flex;flex-direction:column;gap:10px;background:#F7FBFE;border-radius:8px;padding:12px}
+.colh{display:flex;justify-content:space-between;font-size:14px;font-weight:600;color:#45525B}
+.pc{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.pt{font-size:15px;font-weight:600}
+.dr{display:grid;grid-template-columns:180px 360px minmax(0,1fr);align-items:center;height:44px;border-bottom:1px solid #E9F2F7;font-size:15px}
+</style>
+</helmet>
+<div class="sp" style="width: 1920px; height: 1080px; background: #F7FBFE; display: flex; flex-direction: column; overflow: hidden">
+  <div style="height: 28px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: #EEF5FB; color: #45525B; font-size: 13px; border-bottom: 1px solid #DCE5EC">
+    <span style="display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-dasharray="2 2"></rect></svg>Synthetic data · generated for design reference, not company records</span>
+    <span class="mono">Data as of 2026-10-19 06:00 CET · import IMP-0214 · validated</span>
+  </div>
+  <header style="height: 76px; flex: none; display: flex; align-items: center; gap: 28px; padding: 0 40px; background: #FFFFFF; border-bottom: 1px solid #DCE5EC">
+    <div style="display: flex; align-items: center; gap: 10px; width: 190px">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#142933"></rect><path d="M6 15V9M11 15V6M16 15v-4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg>
+      <span style="font-size: 17px; font-weight: 600">Supply Planner</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0">
+      <span class="eyebrow">4 · Supplier risk</span>
+      <span style="font-size: 22px; font-weight: 500; letter-spacing: -0.03em">Who do we depend on too much?</span>
+    </div>
+    <div class="seg" role="group" aria-label="Site">
+      <button aria-pressed="false"><span class="lsn"></span>LSN</button>
+      <button aria-pressed="false"><span class="ldn"></span>LDN</button>
+      <button aria-pressed="true">Group</button>
+    </div>
+    <nav aria-label="Views" style="display: flex; align-items: center; gap: 10px">
+      <button class="ib" aria-label="Previous view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 4L6 9l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <span class="mono" style="font-size: 15px; min-width: 44px; text-align: center">4 / 7</span>
+      <button class="ib" aria-label="Next view"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M7 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    </nav>
+  </header>
+  <main style="flex: 1; padding: 28px 40px; display: grid; grid-template-columns: 1040px minmax(0, 1fr); gap: 24px; min-height: 0">
+    <section class="card" aria-label="Supplier dependence matrix" style="padding: 18px 24px; display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><h2 class="h2">Dependence matrix</h2><span class="mut" style="font-size: 14px">Bubble size = items supplied · click a supplier for detail</span></div>
+      <div style="display: flex; gap: 20px; font-size: 14px; color: #45525B">
+        <span style="display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="#22394A"></circle></svg>Single source for ≥ 1 item</span>
+        <span style="display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="#FFFFFF" stroke="#22394A" stroke-width="1.5"></circle></svg>Every item has a qualified alternate</span>
+      </div>
+      <svg width="990" height="800" viewBox="0 0 990 800" role="img" aria-label="Annual spend (log scale) versus proteins per week exposed. Eight of ten suppliers are single sources for items every protein needs, exposing all 3 634 LSN proteins per week." style="font-family: inherit">
+        <rect x="530" y="30" width="430" height="345" fill="#EEF5FB"></rect>
+        <text x="950" y="254" font-size="14" font-weight="600" fill="#45525B" text-anchor="end">Concentrated dependence</text>
+        <text x="950" y="272" font-size="13" fill="#666666" text-anchor="end">&gt; 300 k CHF/year and &gt; 2 000 proteins/week</text>
+        <g stroke="#E9F2F7"><line x1="232" y1="30" x2="232" y2="720"></line><line x1="347" y1="30" x2="347" y2="720"></line><line x1="499" y1="30" x2="499" y2="720"></line><line x1="615" y1="30" x2="615" y2="720"></line><line x1="730" y1="30" x2="730" y2="720"></line><line x1="882" y1="30" x2="882" y2="720"></line><line x1="80" y1="548" x2="960" y2="548"></line><line x1="80" y1="375" x2="960" y2="375"></line><line x1="80" y1="202" x2="960" y2="202"></line><line x1="80" y1="30" x2="960" y2="30"></line></g>
+        <line x1="80" y1="720" x2="960" y2="720" stroke="#9AA8B2"></line><line x1="80" y1="30" x2="80" y2="720" stroke="#9AA8B2"></line>
+        <g font-size="13" fill="#666666" text-anchor="end"><text x="72" y="724">0</text><text x="72" y="552">1 000</text><text x="72" y="379">2 000</text><text x="72" y="206">3 000</text><text x="72" y="34">4 000</text></g>
+        <g font-size="13" fill="#666666" text-anchor="middle"><text x="80" y="742">20</text><text x="232" y="742">50</text><text x="347" y="742">100</text><text x="499" y="742">250</text><text x="615" y="742">500</text><text x="730" y="742">1 000</text><text x="882" y="742">2 500</text></g>
+        <text x="520" y="772" font-size="14" fill="#45525B" text-anchor="middle">Annual spend, k CHF (log scale, 2026 run rate)</text>
+        <text x="0" y="0" font-size="14" fill="#45525B" text-anchor="middle" transform="translate(22 375) rotate(-90)">LSN proteins/week stopped if the supplier fails</text>
+        <line x1="80" y1="93" x2="960" y2="93" stroke="#142933" stroke-dasharray="2 4"></line>
+        <text x="88" y="85" font-size="12" fill="#666666">all current throughput · 3 634</text>
+        <circle cx="890" cy="93" r="13" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="890" y="59" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">Helix Genomics</text><text x="890" y="75" font-size="12" fill="#666666" text-anchor="middle">2 621 k · 2 items</text><circle cx="821" cy="93" r="13" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="821" y="139" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">Lysis Bio</text><text x="821" y="155" font-size="12" fill="#666666" text-anchor="middle">1 737 k · 2 items</text><circle cx="679" cy="93" r="13" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="679" y="63" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">Ribosyn Labs</text><text x="679" y="79" font-size="12" fill="#666666" text-anchor="middle">736 k · 2 items</text><circle cx="609" cy="317" r="21" fill="none" stroke="#0A6FA6" stroke-width="3"></circle><circle cx="609" cy="317" r="15" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="609" y="355" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">Octane Biosensors</text><text x="609" y="371" font-size="12" fill="#666666" text-anchor="middle">483 k · 3 items</text><circle cx="606" cy="93" r="13" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="606" y="133" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">Enzymatica</text><text x="606" y="149" font-size="12" fill="#666666" text-anchor="middle">474 k · 2 items</text><circle cx="467" cy="93" r="16" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="467" y="65" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">Lumina Assays</text><text x="467" y="81" font-size="12" fill="#666666" text-anchor="middle">205 k · 4 items</text><circle cx="424" cy="720" r="11" fill="#FFFFFF" stroke="#22394A" stroke-width="2"></circle><text x="442" y="706" font-size="14" font-weight="600" fill="#142933" text-anchor="start">Proteo Catalog</text><text x="442" y="722" font-size="12" fill="#666666" text-anchor="start">158 k · 1 items</text><circle cx="384" cy="93" r="20" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="384" y="133" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">LabPlast Europa</text><text x="384" y="149" font-size="12" fill="#666666" text-anchor="middle">125 k · 8 items</text><circle cx="167" cy="93" r="18" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="167" y="65" font-size="14" font-weight="600" fill="#142933" text-anchor="middle">Alpine Lab Supply</text><text x="167" y="81" font-size="12" fill="#666666" text-anchor="middle">34 k · 6 items</text><circle cx="123" cy="680" r="13" fill="#22394A" stroke="#22394A" stroke-width="2"></circle><text x="141" y="685" font-size="14" font-weight="600" fill="#142933" text-anchor="start">Kinetiq Instruments</text><text x="141" y="701" font-size="12" fill="#666666" text-anchor="start">26 k · 2 items</text>
+      </svg>
+    </section>
+    <div style="display: flex; flex-direction: column; gap: 24px; min-width: 0">
+      <section class="card" aria-label="Second-source pipeline" style="padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline"><h2 class="h2">Second-source pipeline</h2><span class="mut" style="font-size: 14px">27 of 30 active items single-source</span></div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+          <div class="col"><div class="colh"><span>Not started</span><span>3</span></div>
+            <div class="pc" style="border-color: #F3B5B5"><span class="pt"><span class="mono">I020 · I021 · I023</span> biosensors</span><span class="mut">Alternative to Octane · no candidate</span><span style="display: flex; align-items: center; gap: 6px; color: #8E1B12; font-weight: 600"><svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>2 330 proteins/week exposed</span><a href="#">Source candidates</a></div>
+            <div class="pc"><span class="pt"><span class="mono">I060 · I061</span> DEVELOP</span><span class="mut">Only a quote from Chromalytix</span><a href="#">Request 2nd quote</a></div>
+            <div class="pc"><span class="pt"><span class="mono">I022</span> kinetics buffer, LDN</span><span class="mut">Thames Scientific · not started</span><a href="#">Start qualification</a></div>
+          </div>
+          <div class="col"><div class="colh"><span>In qualification</span><span>3</span></div>
+            <div class="pc"><span class="pt">Codon Forge → <span class="mono">I001</span></span><span class="mut">Gene fragments · 18.40 EUR/u</span><a href="#">View runs</a></div>
+            <div class="pc"><span class="pt">Cellfree Nordic → <span class="mono">I010</span></span><span class="mut">Lysate kit · 248 EUR/mL</span><a href="#">View runs</a></div>
+            <div class="pc"><span class="pt">Thames Scientific → <span class="mono">I070</span></span><span class="mut"><span class="ldn" style="margin-right: 5px"></span>UK plastics · 4.60 GBP/u</span><a href="#">View runs</a></div>
+          </div>
+          <div class="col"><div class="colh"><span>Qualified alternate</span><span>2</span></div>
+            <div class="pc"><span class="pt">Antigenix → <span class="mono">I024</span></span><span class="mut">Target panel · 3.80 USD/µg</span></div>
+            <div class="pc"><span class="pt">Thames Scientific → <span class="mono">I071</span></span><span class="mut"><span class="ldn" style="margin-right: 5px"></span>50 µL tips, UK</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="card" aria-label="Lead-time reliability" style="flex: 1; padding: 18px 20px; display: flex; flex-direction: column">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px"><h2 class="h2">Lead-time reliability</h2>
+          <span style="display: flex; gap: 14px; font-size: 13px; color: #45525B"><span style="display: flex; align-items: center; gap: 5px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle></svg>Quoted</span><span style="display: flex; align-items: center; gap: 5px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="#142933"></circle></svg>Actual, 2026 POs</span></span></div>
+        <div class="dr" style="height: 30px; font-size: 13px; color: #666666"><span>Supplier, by delay</span><span>weeks (0 – 8)</span><span style="text-align: right">On time</span></div>
+        <div class="dr"><span>Ribosyn Labs</span><svg width="360" height="28" viewBox="0 0 360 28" role="img" aria-label="quoted 5.0, actual 5.8 weeks"><line x1="10" y1="14" x2="330" y2="14" stroke="#E9F2F7"></line><line x1="210" y1="14" x2="242" y2="14" stroke="#EF4444" stroke-width="3"></line><circle cx="210" cy="14" r="6" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle><circle cx="242" cy="14" r="6" fill="#142933"></circle><text x="254" y="19" font-size="13" fill="#45525B">+0.8 wk</text></svg><span style="text-align: right; color: #8E1B12; font-weight: 600">27 %</span></div>
+        <div class="dr" style="background: #E9F2F7"><span style="font-weight: 600">Octane Biosensors</span><svg width="360" height="28" viewBox="0 0 360 28" role="img" aria-label="quoted 6.0, actual 6.7 weeks"><line x1="10" y1="14" x2="330" y2="14" stroke="#E9F2F7"></line><line x1="250" y1="14" x2="279" y2="14" stroke="#EF4444" stroke-width="3"></line><circle cx="250" cy="14" r="6" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle><circle cx="279" cy="14" r="6" fill="#142933"></circle><text x="291" y="19" font-size="13" fill="#45525B">+0.7 wk</text></svg><span style="text-align: right; color: #8E1B12; font-weight: 600">30 %</span></div>
+        <div class="dr"><span>Lysis Bio</span><svg width="360" height="28" viewBox="0 0 360 28" role="img" aria-label="quoted 3.0, actual 3.3 weeks"><line x1="10" y1="14" x2="330" y2="14" stroke="#E9F2F7"></line><line x1="130" y1="14" x2="143" y2="14" stroke="#FFBB00" stroke-width="3"></line><circle cx="130" cy="14" r="6" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle><circle cx="143" cy="14" r="6" fill="#142933"></circle><text x="155" y="19" font-size="13" fill="#45525B">+0.3 wk</text></svg><span style="text-align: right">38 %</span></div>
+        <div class="dr"><span>Kinetiq Instruments</span><svg width="360" height="28" viewBox="0 0 360 28" role="img" aria-label="quoted 4.0, actual 4.3 weeks"><line x1="10" y1="14" x2="330" y2="14" stroke="#E9F2F7"></line><line x1="170" y1="14" x2="181" y2="14" stroke="#FFBB00" stroke-width="3"></line><circle cx="170" cy="14" r="6" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle><circle cx="181" cy="14" r="6" fill="#142933"></circle><text x="193" y="19" font-size="13" fill="#45525B">+0.3 wk</text></svg><span style="text-align: right; color: #8E1B12; font-weight: 600">20 %</span></div>
+        <div class="dr"><span>Alpine Lab Supply</span><svg width="360" height="28" viewBox="0 0 360 28" role="img" aria-label="quoted 0.4, actual 0.7 weeks"><line x1="10" y1="14" x2="330" y2="14" stroke="#E9F2F7"></line><line x1="27" y1="14" x2="36" y2="14" stroke="#FFBB00" stroke-width="3"></line><circle cx="27" cy="14" r="6" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle><circle cx="36" cy="14" r="6" fill="#142933"></circle><text x="48" y="19" font-size="13" fill="#45525B">+0.2 wk</text></svg><span style="text-align: right; color: #8E1B12; font-weight: 600">30 %</span></div>
+        <div class="dr"><span>Enzymatica</span><svg width="360" height="28" viewBox="0 0 360 28" role="img" aria-label="quoted 1.3, actual 1.5 weeks"><line x1="10" y1="14" x2="330" y2="14" stroke="#E9F2F7"></line><line x1="61" y1="14" x2="69" y2="14" stroke="#FFBB00" stroke-width="3"></line><circle cx="61" cy="14" r="6" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle><circle cx="69" cy="14" r="6" fill="#142933"></circle><text x="81" y="19" font-size="13" fill="#45525B">+0.2 wk</text></svg><span style="text-align: right">40 %</span></div>
+        <div class="dr"><span>Proteo Catalog</span><svg width="360" height="28" viewBox="0 0 360 28" role="img" aria-label="quoted 1.4, actual 1.6 weeks"><line x1="10" y1="14" x2="330" y2="14" stroke="#E9F2F7"></line><line x1="67" y1="14" x2="75" y2="14" stroke="#FFBB00" stroke-width="3"></line><circle cx="67" cy="14" r="6" fill="#FFFFFF" stroke="#142933" stroke-width="1.5"></circle><circle cx="75" cy="14" r="6" fill="#142933"></circle><text x="87" y="19" font-size="13" fill="#45525B">+0.2 wk</text></svg><span style="text-align: right">36 %</span></div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

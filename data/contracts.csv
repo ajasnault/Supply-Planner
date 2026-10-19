@@ -1,0 +1,4 @@
+contract_id,supplier_id,type,start_date,end_date,annual_commitment_value,currency,scope_items,status,notes
+C-2026-01,S01,frame_agreement,2026-01-01,2026-12-31,2400000,USD,I001;I002,active,Tiered pricing on annual fragment volume; renewal to negotiate before 2027
+C-2026-02,S09,frame_agreement,2026-04-01,2027-03-31,420000,EUR,I041;I042;I051;I070;I071;I072;I073;I074,active,EDI ordering; 60-day payment terms
+C-2026-03,S03,none,,,0,EUR,I010;I011,spot,No agreement despite largest reagent spend; portal upload ordering

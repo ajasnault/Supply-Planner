@@ -1,0 +1,3 @@
+site_id,site_name,country,currency,go_live_date,status,legal_entity
+LSN,Lausanne lab,CH,CHF,2023-03-01,live,Adaptyv Biosystems Sàrl (fictional data)
+LDN,London lab,GB,GBP,2027-01-11,planned,Adaptyv UK Ltd (fictional data)

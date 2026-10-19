@@ -1,0 +1,9 @@
+site_id,temp_zone,capacity_liters,used_liters_today
+LSN,-80C,2400,1650
+LSN,-20C,1800,900
+LSN,2-8C,3000,1400
+LSN,ambient,40000,22000
+LDN,-80C,1200,0
+LDN,-20C,900,0
+LDN,2-8C,1500,0
+LDN,ambient,25000,0

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Item panel: I060 without supplier</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0A6FA6}a:hover{color:#085A87}
+.sp{font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;color:#142933;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.sp button,.sp select,.sp input{font:inherit}
+.sp button{cursor:pointer}
+.sp h1,.sp h2{letter-spacing:-0.025em;font-weight:500}
+.mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#666666}
+.card{background:#FFFFFF;border:1px solid #DCE5EC;border-radius:8px}
+.seg{display:flex;border:1px solid #C8D3DC;border-radius:8px;overflow:hidden;background:#FFFFFF}
+.seg button{height:44px;padding:0 16px;border:0;border-right:1px solid #C8D3DC;background:transparent;color:#142933;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:#36B7F6;color:#142933}
+.ib{width:44px;height:44px;border:1px solid #C8D3DC;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#142933;padding:0}
+.btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #C8D3DC;background:#FFFFFF;color:#142933;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-p{background:#36B7F6;border-color:#36B7F6;color:#142933}
+.chip{height:36px;padding:0 12px;border-radius:18px;border:1px solid #C8D3DC;background:#FFFFFF;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:#142933}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border-radius:13px;font-size:14px;font-weight:600;white-space:nowrap}
+.crit{background:#FBE7E4;color:#8E1B12}
+.warn{background:#FBF0D6;color:#6B4700}
+.ok{background:#E2F1E8;color:#1C5A3A}
+.lsn{width:10px;height:10px;background:#8855FF;border-radius:1px;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.ldn{width:11px;height:11px;background:#0F8B8D;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px #FFFFFF}
+.mut{color:#666666}
+.u{color:#666666;font-size:13px;margin-left:3px}
+.r{text-align:right}
+.kpi{padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box;height:172px}
+.kl{font-size:15px;font-weight:500;color:#45525B}
+.kv{font-size:40px;font-weight:500;letter-spacing:-0.04em;line-height:1.1}
+.ku{font-size:18px;color:#666666;font-weight:500}
+.tag{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#45525B;border:1px dashed #9AA8B2;border-radius:4px;padding:2px 6px}
+.al{display:grid;grid-template-columns:132px 330px minmax(0,1fr) 150px 400px;gap:20px;align-items:center;padding:0 24px;height:86px;border-top:1px solid #E9F2F7}
+.h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-0.02em}
+.lg{display:flex;align-items:center;gap:8px;font-size:14px;color:#45525B}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px}
+table.t{border-collapse:collapse;width:100%}
+.t th{font-size:13px;font-weight:500;color:#666666;text-align:left;padding:0 10px;height:40px;border-bottom:1px solid #C8D3DC;white-space:nowrap}
+.t td{font-size:15px;padding:0 10px;height:56px;border-bottom:1px solid #E9F2F7;white-space:nowrap}
+.mt th{height:32px;padding:0 8px}.mt td{font-size:14px;height:36px;padding:0 8px}
+.ps{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid #E9F2F7;border-radius:8px}
+.pl{font-size:13px;color:#666666}
+.pv{font-size:22px;font-weight:500;letter-spacing:-0.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #E9F2F7;font-size:16px}
+.bar{position:relative;width:110px;height:8px;background:#E9F2F7;border-radius:4px}
+.bar i{position:absolute;left:0;top:0;height:8px;border-radius:4px;background:#45525B}
+.bar b{position:absolute;top:-4px;width:2px;height:16px;background:#142933}
+.act{margin-top:auto;border:1px solid #C8D3DC;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#F3F8FC}
+</style>
+</helmet>
+<aside class="sp" aria-label="Item detail I060" style="width: 680px; height: 1080px; box-sizing: border-box; background: #FFFFFF; border-left: 1px solid #C8D3DC; padding: 22px 28px; display: flex; flex-direction: column; gap: 12px; overflow: hidden">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 4px"><span class="eyebrow">Item · DEVELOP assay</span><h2 style="margin: 0; font-size: 24px"><span class="mono">I060</span> UHPLC SEC column, 4.6 × 150 mm</h2>
+      <span class="mut" style="font-size: 14px; display: flex; align-items: center; gap: 6px"><span class="lsn"></span>LSN · ambient · with <span class="mono">I061</span> CE-SDS cartridge (2–8 °C)</span></div>
+    <button class="ib" aria-label="Close panel"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></button>
+  </div>
+  <span style="align-self: flex-start"><span class="st crit"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.1 1h5.8L13 4.1v5.8L9.9 13H4.1L1 9.9V4.1z" fill="#EF4444"></path><path d="M7 4v3.6M7 9.6v.2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></path></svg>No qualified supplier · order by 2026-12-07</span></span>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+    <div class="ps"><span class="pl">Launch</span><span class="pv">02-01</span><span class="pl">2027 · LSN</span></div>
+    <div class="ps"><span class="pl">Need to June</span><span class="pv">5 + 18</span><span class="pl">columns + cartridges</span></div>
+    <div class="ps"><span class="pl">Lead time</span><span class="pv">8.0 <span style="font-size: 14px">wk</span></span><span class="pl">quoted, untested</span></div>
+    <div class="ps"><span class="pl">Proteins blocked</span><span class="pv">440 <span style="font-size: 14px">p/wk</span></span><span class="pl">by June 2027</span></div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; align-items: baseline"><h3 style="margin: 0; font-size: 16px; font-weight: 500">Demand without supply</h3><span class="mut" style="font-size: 13px">DEVELOP proteins per week</span></div><svg width="624" height="200" viewBox="0 0 624 200" role="img" aria-label="DEVELOP proteins per week at LSN from launch on 2027-02-01, rising from 54 to about 440 by June 2027; no supply can be projected for I060 and I061" style="font-family: inherit">
+      <defs><pattern id="p60no" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="7" height="7" fill="#FBE7E4"></rect><line x1="0" y1="0" x2="0" y2="7" stroke="#EF4444" stroke-width="1.2"></line></pattern></defs>
+      <g stroke="#E9F2F7"><line x1="40" y1="95" x2="610" y2="95"></line><line x1="40" y1="30" x2="610" y2="30"></line></g>
+      <g font-size="12" fill="#666666" text-anchor="end"><text x="32" y="164">0</text><text x="32" y="99">250</text><text x="32" y="34">500</text></g>
+      <rect x="131" y="146" width="479" height="14" fill="url(#p60no)"></rect>
+      <path d="M40.0,160.0 L62.8,160.0 L85.6,160.0 L108.4,160.0 L131.2,146.0 L154.0,138.7 L176.8,130.9 L199.6,123.9 L222.4,111.4 L245.2,104.9 L268.0,95.8 L290.8,84.9 L313.6,72.1 L336.4,65.1 L359.2,53.9 L382.0,52.9 L404.8,53.4 L427.6,53.1 L450.4,48.5 L473.2,49.8 L496.0,49.2 L518.8,50.0 L541.6,52.9 L564.4,47.4 L587.2,44.3 L610.0,45.6" fill="none" stroke="#0A6FA6" stroke-width="2.2" stroke-dasharray="6 4"></path>
+      <line x1="131" y1="20" x2="131" y2="160" stroke="#142933" stroke-width="2"></line><rect x="125" y="154" width="12" height="12" fill="#142933"></rect>
+      <text x="139" y="32" font-size="13" font-weight="600" fill="#142933">DEVELOP launch · 2027-02-01</text>
+      <text x="139" y="140" font-size="12" font-weight="600" fill="#8E1B12">no qualified supply for SEC and CE-SDS</text>
+      <line x1="40" y1="160" x2="610" y2="160" stroke="#9AA8B2"></line>
+      <g font-size="12" fill="#666666" text-anchor="middle"><text x="40" y="180">Jan</text><text x="131" y="180">Feb</text><text x="222" y="180">Mar</text><text x="336" y="180">Apr</text><text x="428" y="180">May</text><text x="519" y="180">Jun</text></g>
+    </svg></div>
+  <div style="display: flex; flex-direction: column; gap: 2px"><h3 style="margin: 0; font-size: 16px; font-weight: 500">Sourcing options</h3>
+    <table class="t mt"><thead><tr><th>Supplier</th><th>Item</th><th>Status</th><th>Quote</th><th>Note</th></tr></thead><tbody>
+      <tr><td style="font-weight: 500">Chromalytix</td><td class="mono">I060</td><td><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Quoted</span></td><td>1 250 USD · MOQ 1</td><td class="mut">EXW · 56 d</td></tr>
+      <tr><td style="font-weight: 500">Chromalytix</td><td class="mono">I061</td><td><span class="st warn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.2L13.3 12.5H.7z" fill="#FFBB00"></path><path d="M7 5.2v3.4M7 10.3v.2" stroke="#142933" stroke-width="1.5" stroke-linecap="round"></path></svg>Quoted</span></td><td>620 USD · MOQ 2</td><td style="color: #8E1B12">no cold chain</td></tr>
+    </tbody></table></div>
+  <div style="display: flex; flex-direction: column; gap: 2px"><h3 style="margin: 0; font-size: 16px; font-weight: 500">Latest dates to launch on time</h3>
+    <div style="display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 12px; font-size: 14px; padding: 6px 0"><span class="mono">2026-11-09</span><span>Order test units and start qualification (≈ 4 weeks)</span></div>
+    <div style="display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 12px; font-size: 14px; padding: 6px 0"><span class="mono">2026-12-07</span><span>Supplier qualified, first order placed (56-day lead time)</span></div>
+    <div style="display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 12px; font-size: 14px; padding: 6px 0"><span class="mono">2027-02-01</span><span>DEVELOP launch at LSN</span></div>
+  </div>
+  <div class="act">
+    <span style="font-size: 15px; line-height: 1.4">Chromalytix is the only quote and cannot ship the 2–8 °C cartridge cold. Order test units now to start qualification, and ask a second vendor to quote both items.</span>
+    <div style="display: flex; gap: 10px; justify-content: flex-end"><button class="btn">Request 2nd quote</button><button class="btn btn-p">Order test units</button></div>
+  </div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":680,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
