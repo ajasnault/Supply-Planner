@@ -9,7 +9,7 @@ const mean = (xs: number[]) => sum(xs) / xs.length;
 
 export type Status = 'crit' | 'warn' | 'ok';
 
-export function analyze(m: Model) {
+export function analyze(m: Model, goLive = '2027-01-11') {
   const pol = itemPolicies(m);
   const ref = computeAll(m) as ReturnType<typeof computeAll> & Record<string, any>;
   // supplier delay history (received - promised), days
@@ -23,7 +23,9 @@ export function analyze(m: Model) {
   const realistic = (po: Row) => {
     const d = delays.get(po.supplier_id) ?? [0];
     const late = po.promised_date < m.today;
-    const r = addDays(po.promised_date, Math.max(0, Math.round(late ? Math.max(...d) : mean(d))));
+    let r = addDays(po.promised_date, Math.max(0, Math.round(late ? Math.max(...d) : mean(d))));
+    const forced = m.leadTimeOverride.get(po.supplier_id);
+    if (forced !== undefined) { const f = addDays(po.order_date, Math.round(forced * 7)); if (f > r) r = f; }
     return r < m.today ? m.today : r;
   };
   /** Weekly projected stock (start of week) for an LSN item, open POs at realistic dates. */
@@ -70,7 +72,7 @@ export function analyze(m: Model) {
 
   const supplierRel = supplierStats(m);
   const cpp = costPerProtein(m);
-  const london = londonInitialStock(m);
+  const london = londonInitialStock(m, goLive);
 
   // exposure: current LSN proteins/week of assays using an item single-sourced from the supplier
   const cur = Object.fromEntries([...m.bom.keys()].map((a) => [a, m.proteins(m.today, 'LSN', a)]));

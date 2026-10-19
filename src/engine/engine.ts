@@ -69,9 +69,11 @@ export interface Model {
   priceChf: (item: string) => number;
   landedPct: (supplier: string, site: Site) => number;
   currency: (supplier: string) => string;
+  /** Scenario override: forced lead time in weeks per supplier. */
+  leadTimeOverride: Map<string, number>;
 }
 
-export function buildModel(ds: Dataset, today = '2026-10-19'): Model {
+export function buildModel(ds: Dataset, today = '2026-10-19', leadTimeOverride = new Map<string, number>()): Model {
   const items = new Map(ds.items.map((r) => [r.item_id, r]));
   const sups = new Map(ds.suppliers.map((r) => [r.supplier_id, r]));
   const fxMap = new Map(ds.fx.map((r) => [`${r.month}|${r.currency}`, +r.rate_to_chf]));
@@ -138,7 +140,7 @@ export function buildModel(ds: Dataset, today = '2026-10-19'): Model {
   };
   return {
     today, ds, items, sups, bom, weeks, future: weeks.filter((w) => w >= today), proteins, competition, use, pref,
-    fx, fxMaybe, unitPrice, priceChf, landedPct, currency,
+    fx, fxMaybe, unitPrice, priceChf, landedPct, currency, leadTimeOverride,
   };
 }
 
@@ -179,7 +181,8 @@ export function itemPolicies(m: Model) {
     const u = sum(m.future.slice(0, 4).map((w) => m.use(w, 'LSN').get(it) ?? 0)) / 4;
     const ltq = +m.pref.get(it)!.quoted_lead_time_days / 7;
     const obs = observed.get(it);
-    const lto = obs ? mean(obs) / 7 : ltq;
+    const forced = m.leadTimeOverride.get(m.pref.get(it)!.supplier_id);
+    const lto = forced ?? (obs ? mean(obs) / 7 : ltq);
     const oh = onHand.get(it) ?? 0;
     const nq = ds.supplierItems.filter((r) => r.item_id === it && r.qualification_status === 'qualified' && (r.site_scope === 'ALL' || r.site_scope === 'LSN')).length;
     policies.set(it, {
@@ -302,7 +305,7 @@ export function supplierStats(m: Model) {
   return out;
 }
 
-export function londonInitialStock(m: Model, goLive = '2027-01-11', needBy = '2027-01-04', weeksOfStock = 6) {
+export function londonInitialStock(m: Model, goLive = '2027-01-11', needBy = addDays(goLive, -7), weeksOfStock = 6) {
   const lw = m.weeks.filter((w) => w >= goLive && w < addDays(goLive, 7 * weeksOfStock));
   const grp = new Map<string, { items: string[]; cost: number; lead: number }>();
   const noSource: { item: string; qty: number }[] = [];
@@ -318,7 +321,8 @@ export function londonInitialStock(m: Model, goLive = '2027-01-11', needBy = '20
     const g = grp.get(s.supplier_id) ?? { items: [], cost: 0, lead: 0 };
     g.items.push(it);
     g.cost += q * up * m.fx(m.currency(s.supplier_id)) * (1 + m.landedPct(s.supplier_id, 'LDN'));
-    g.lead = Math.max(g.lead, +s.quoted_lead_time_days);
+    const forced = m.leadTimeOverride.get(s.supplier_id);
+    g.lead = Math.max(g.lead, forced !== undefined ? Math.round(forced * 7) : +s.quoted_lead_time_days);
     grp.set(s.supplier_id, g);
   }
   const orders = Object.fromEntries([...grp].map(([k, g]) => [k, { items: g.items, cost_chf: round(g.cost), lead_days: g.lead, order_by: addDays(needBy, -g.lead) }]));
