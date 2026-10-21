@@ -1,0 +1,311 @@
+<title>Procurement Agent</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: work queue (left) · agent run log (centre) · approvals and audit (right); stacks on narrow screens. Single light look matching Supply Planner. */
+:root{
+  --bg:#F7FBFE; --surface:#FFFFFF; --band:#EEF5FB; --ink:#142933; --ink2:#45525B; --muted:#666666;
+  --line:#DCE5EC; --line2:#C8D3DC; --divider:#E9F2F7; --primary:#36B7F6; --link:#0A6FA6;
+  --crit:#EF4444; --critBg:#FBE7E4; --critFg:#8E1B12; --warn:#FFBB00; --warnBg:#FBF0D6; --warnFg:#6B4700;
+  --ok:#16A34A; --okBg:#E2F1E8; --okFg:#1C5A3A; --agent:#0A6FA6; --agentBg:#E9F2F7;
+  --sans:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'Geist Mono',ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 var(--sans);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1500px;margin:0 auto;padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+.mono{font-family:var(--mono)}
+.mut{color:var(--muted)}
+.strip{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--ink2);background:var(--band);border:1px solid var(--line);border-radius:8px;padding:6px 12px}
+header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600}
+.titles{flex:1;min-width:240px}
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+h1{margin:0;font-size:24px;font-weight:500;letter-spacing:-.03em;text-wrap:balance}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button{font:inherit;cursor:pointer}
+.btn{height:40px;padding:0 14px;border-radius:8px;border:1px solid var(--line2);background:var(--surface);color:var(--ink);font-weight:500;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{border-color:var(--link)}
+.btn-p{background:var(--primary);border-color:var(--primary);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.sm{height:32px;padding:0 10px;font-size:14px}
+label.th{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink2)}
+label.th select{height:40px;border:1px solid var(--line2);border-radius:8px;padding:0 8px;font:inherit;background:var(--surface);color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.kpi .l{font-size:13px;color:var(--muted)}
+.kpi .v{font-size:28px;font-weight:500;letter-spacing:-.03em;line-height:1.15}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;min-width:0}
+.card>h2{margin:0;font-size:16px;font-weight:500;letter-spacing:-.02em;padding:12px 16px;border-bottom:1px solid var(--divider);display:flex;justify-content:space-between;gap:4px 12px;align-items:baseline;flex-wrap:wrap}
+.card>h2 small{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0}
+.q{display:flex;flex-direction:column}
+.qi{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;padding:10px 16px;border-bottom:1px solid var(--divider);align-items:start}
+.qi:last-child{border-bottom:0}
+.qi.active{background:var(--agentBg)}
+.qi .t{font-weight:500}
+.qi .s{font-size:13px;color:var(--muted)}
+.dot{width:12px;height:12px;border-radius:50%;margin-top:5px;border:2px solid var(--line2);background:var(--surface)}
+.dot.run{border-color:var(--agent);background:var(--agent);animation:pulse 1s ease-in-out infinite}
+.dot.done{border-color:var(--ok);background:var(--ok)}
+.dot.wait{border-color:var(--warn);background:var(--warn)}
+.dot.exc{border-color:var(--crit);background:var(--crit)}
+@keyframes pulse{50%{opacity:.35}}
+.chan{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:11px;font-size:12px;font-weight:600;white-space:nowrap}
+.chan.auto{background:var(--agentBg);color:var(--link)}
+.chan.manual{background:#F3F3F3;color:var(--ink2)}
+.chan.in{background:var(--warnBg);color:var(--warnFg)}
+.log{padding:8px 16px 16px;display:flex;flex-direction:column;gap:8px;max-height:760px;overflow:auto}
+.case{flex:none;border:1px solid var(--divider);border-radius:8px;overflow:hidden}
+.case>header{background:var(--band);padding:8px 12px;font-weight:500;gap:8px;justify-content:space-between}
+.step{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;padding:7px 12px;border-top:1px solid var(--divider);font-size:14px;animation:in .25s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.tag{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--link);padding-top:1px}
+.tag.read{color:var(--ink2)}.tag.check{color:var(--okFg)}.tag.act{color:var(--link)}.tag.human{color:var(--warnFg)}.tag.exc{color:var(--critFg)}
+pre.doc{margin:4px 0 0;white-space:pre-wrap;font:13px/1.45 var(--mono);background:#F7FBFE;border:1px solid var(--divider);border-radius:6px;padding:8px 10px;color:var(--ink2);overflow-x:auto}
+table.kv{border-collapse:collapse;margin-top:4px;font-size:13px;width:100%}
+table.kv td{padding:3px 6px;border-bottom:1px solid var(--divider);vertical-align:top}
+table.kv td:first-child{color:var(--muted);white-space:nowrap}
+.st{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:12px;font-size:13px;font-weight:600;white-space:nowrap}
+.st.crit{background:var(--critBg);color:var(--critFg)}.st.warn{background:var(--warnBg);color:var(--warnFg)}.st.ok{background:var(--okBg);color:var(--okFg)}.st.agent{background:var(--agentBg);color:var(--link)}
+.ap{padding:12px 16px;border-bottom:1px solid var(--divider);display:flex;flex-direction:column;gap:8px}
+.ap:last-child{border-bottom:0}
+.ap .row{display:flex;gap:8px;flex-wrap:wrap}
+.empty{padding:14px 16px;color:var(--muted);font-size:14px}
+.audit{max-height:320px;overflow:auto;padding:6px 16px 12px;font:12.5px/1.5 var(--mono);color:var(--ink2)}
+.audit div{padding:3px 0;border-bottom:1px dashed var(--divider)}
+.rules{padding:10px 16px 14px;font-size:14px;display:flex;flex-direction:column;gap:6px}
+.rules li{margin-left:18px}
+.foot{font-size:13px;color:var(--muted)}
+@media (max-width:1100px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.grid>.c3{grid-column:1/-1}.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:720px){.grid{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.step{grid-template-columns:70px minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="strip"><span>Synthetic data · simulated run · no supplier is contacted</span><span class="mono">Supply Planner · 2026-10-20 · LSN</span></div>
+  <header>
+    <div class="brand"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" fill="#142933"/><path d="M6 15V9M11 15V6M16 15v-4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/></svg>Supply Planner</div>
+    <div class="titles"><div class="eyebrow">Procurement agent · demo</div><h1>Rules decide what to buy; the agent handles suppliers; people see only exceptions</h1></div>
+    <div class="controls">
+      <label class="th" for="thr">Auto-approve below
+        <select id="thr"><option value="2000">2 000 CHF</option><option value="5000" selected>5 000 CHF</option><option value="10000">10 000 CHF</option></select>
+      </label>
+      <button class="btn" id="step">Next step</button>
+      <button class="btn btn-p" id="run">Run agent</button>
+      <button class="btn" id="reset">Reset</button>
+    </div>
+  </header>
+
+  <section class="kpis" aria-label="Run summary">
+    <div class="kpi"><span class="l">Tasks in queue</span><span class="v" id="k-q">0</span></div>
+    <div class="kpi"><span class="l">Done without a person</span><span class="v" id="k-auto">0</span></div>
+    <div class="kpi"><span class="l">Waiting for approval</span><span class="v" id="k-ap">0</span></div>
+    <div class="kpi"><span class="l">Exceptions raised</span><span class="v" id="k-ex">0</span></div>
+    <div class="kpi"><span class="l">Buyer time saved</span><span class="v" id="k-min">0 min</span></div>
+  </section>
+
+  <div class="grid">
+    <section class="card" aria-label="Work queue">
+      <h2>Work queue <small>from the planning engine and the purchasing inbox</small></h2>
+      <div class="q" id="queue"></div>
+    </section>
+    <section class="card" aria-label="Agent run">
+      <h2>Agent run <small id="runstate">idle · press Run agent</small></h2>
+      <div class="log" id="log" aria-live="polite"></div>
+    </section>
+    <div class="c3" style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <section class="card" aria-label="Approvals and exceptions">
+        <h2>For a person <small id="apcount">nothing yet</small></h2>
+        <div id="approvals"><div class="empty">Approvals and exceptions appear here. Everything else runs on its own.</div></div>
+      </section>
+      <section class="card" aria-label="Guardrails">
+        <h2>Guardrails</h2>
+        <ul class="rules">
+          <li>Quantities come from the planning engine, never from the agent.</li>
+          <li>Only qualified suppliers, catalogue items and contract prices.</li>
+          <li>Above the threshold, or any price or quantity change: a person approves.</li>
+          <li>The agent never adds suppliers, changes bank details or pays invoices.</li>
+          <li>Every action is logged with its source.</li>
+        </ul>
+      </section>
+      <section class="card" aria-label="Audit log">
+        <h2>Audit log <small>append-only</small></h2>
+        <div class="audit" id="audit"><div class="mut">No actions yet.</div></div>
+      </section>
+    </div>
+  </div>
+  <p class="foot">Figures, suppliers and purchase orders come from the synthetic dataset behind Supply Planner. The run is scripted to show the workflow; in production each step is a call to the planning engine, the supplier channel (API, EDI, portal, e-mail) or a language model reading supplier documents.</p>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var fmt = function(n,d){ return Number(n).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}).replace(/,/g,' '); };
+
+  // ---- tasks: outbound proposals from the engine, inbound supplier documents ----
+  // value in CHF; minutes = buyer time a person would spend by hand
+  var TASKS = [
+    { id:'p-i041', kind:'order', title:'I041 384-well qPCR plate', sub:'LabPlast Europa · 200 plates', chan:['EDI','auto'], value:1220, minutes:10,
+      steps:[
+        ['read','Proposal from planning engine: order by 2026-10-13 (overdue), 200 plates = reorder point + 2 weeks, 4 packs of 50.'],
+        ['check','Supplier LabPlast Europa qualified · contract C-2026-02 active to 2027-03-31 · 6.50 EUR/plate matches contract.'],
+        ['check','Value 1.2 k CHF is below the approval threshold.'],
+        ['act','EDI ORDERS message sent · PO-26-1351 created.'],
+        ['act','EDI ORDRSP received: confirmed, ships 2026-10-30. Promised date stored.']
+      ], end:'done' },
+    { id:'p-i013', kind:'order', title:'I013 Disulfide bond enhancer', sub:'Ribosyn Labs · 1 mL', chan:['E-mail','manual'], value:240, minutes:15,
+      steps:[
+        ['read','Proposal: cover 4.0 wk vs 6.2 wk real lead time; order 1 mL (MOQ 1).'],
+        ['check','Qualified supplier · price 300 USD/mL from last PO · below threshold.'],
+        ['act','PO-26-1352 generated as PDF and e-mailed to orders@ribosyn (supplier channel: e-mail).',
+          'Subject: PO-26-1352 · Adaptyv Biosystems · RS-DSB-1 × 1\nPlease confirm availability and ship date. Delivery: LSN, frozen (-80 °C).'],
+        ['act','Follow-up scheduled: chase on 2026-10-22 if no confirmation.']
+      ], end:'done' },
+    { id:'p-i001', kind:'order', title:'I001 Linear gene fragments', sub:'Helix Genomics · 8 640 fragments', chan:['API','auto'], value:132900, minutes:20,
+      steps:[
+        ['read','Proposal: cover 2.3 wk vs 1.4 wk lead time; 8 640 fragments (90 packs of 96).'],
+        ['check','Contract C-2026-01 · tier 2 price 19.20 USD/fragment applies · matches last PO.'],
+        ['human','132.9 k CHF is above the threshold: approval requested.']
+      ], approval:{ text:'Send PO for 8 640 fragments to Helix Genomics via API?', detail:'132.9 k CHF · 19.20 USD/fragment (contract C-2026-01, tier 2) · ships in 10 days.', yes:'Approve and send', after:[['act','Approved. Order posted to Helix API · PO-26-1353 · confirmation 201 received, ships 2026-10-27.']] }, end:'done' },
+    { id:'in-oct', kind:'inbound', title:'E-mail from Octane Biosensors', sub:'Re: PO-26-1145 status', chan:['Inbound','in'], value:0, minutes:25,
+      doc:'From: orders@octane-biosensors\nRe: PO-26-1145\nDue to a production delay we can ship 2,000 units of OB-SA-96 on Oct 27. The remaining 1,456 units will follow on Nov 10. Apologies for the inconvenience.',
+      steps:[
+        ['read','Supplier e-mail matched to PO-26-1145 (I020, 3 456 u, promised 2026-10-12).'],
+        ['read','Extracted: split shipment · 2 000 u ships 2026-10-27 · 1 456 u ships 2026-11-10.'],
+        ['act','Open PO updated with two delivery lines; planning engine re-run for I020.'],
+        ['exc','I020 still drops below safety stock in W45 (≈ 3 days without biosensors). Exception raised.'],
+        ['act','Reply drafted asking to expedite the first 2 000 u by air.']
+      ], approval:{ kind:'exc', text:'I020 stock-out risk W45 after Octane split shipment', detail:'Draft reply asks Octane to air-ship the first 2 000 units (expedite fee expected). BLI runs affected: ≈ 2 330 proteins/week.', yes:'Send draft reply', no:'Handle myself', after:[['act','Reply sent to Octane. Follow-up set for 2026-10-21 09:00.']] }, end:'exc' },
+    { id:'in-lys', kind:'inbound', title:'Invoice from Lysis Bio', sub:'INV-LB-77412 for PO-26-1109', chan:['Inbound','in'], value:0, minutes:20,
+      doc:'Lysis Bio GmbH · Invoice INV-LB-77412\nPO-26-1109 · LB-ECX-10 · 460 mL × 295.00 EUR = 135,700.00 EUR\nPayment terms: 30 days',
+      steps:[
+        ['read','Invoice parsed: PO-26-1109, 460 mL at 295.00 EUR/mL.'],
+        ['check','Three-way match: PO price 290.00 EUR · goods receipt pending · invoice 295.00 EUR.'],
+        ['exc','Price differs from PO (+5 EUR/mL, +2 300 EUR). Invoice blocked for payment. Exception raised.']
+      ], approval:{ kind:'exc', text:'Lysis Bio invoiced 295 EUR/mL instead of 290', detail:'+2 300 EUR on PO-26-1109. No contract with Lysis Bio, so list price can move. Use it in the contract negotiation.', yes:'Dispute with supplier', no:'Accept price', after:[['act','Dispute e-mail sent quoting PO-26-1109 price. Invoice stays blocked.']] }, end:'exc' },
+    { id:'in-lp', kind:'inbound', title:'LabPlast price list 2027', sub:'labplast_preisliste_2027.csv', chan:['Inbound','in'], value:0, minutes:45,
+      doc:'Art.-Nr.;Bezeichnung;VE (Stk);Preis/Stk (EUR);Mindestmenge (VE);Lieferzeit (AT);gültig ab\nLP-Q384-50;384-well qPCR plate;50;6,877;4;9;01.01.2027\nLP-T50F-3840;Liquid-handler tips 50 uL, filtered;3840;0,047;5;9;01.01.2027',
+      steps:[
+        ['read','German headers, ";" separator, decimal commas, lead time in working days (AT).'],
+        ['act','Column mapping proposed: Art.-Nr. → supplier_sku · Preis/Stk → unit_price (6,877 → 6.877) · Lieferzeit (AT) 9 → 13 calendar days · gültig ab → valid_from.'],
+        ['check','8 of 8 SKUs matched to items. Prices +3.9 % to +5.8 % vs current.'],
+        ['exc','New prices from 2027-01-01, but contract C-2026-02 fixes prices until 2027-03-31. Exception raised.']
+      ], approval:{ kind:'exc', text:'Confirm mapping; LabPlast raises prices during the contract term', detail:'Mapping needs a person to confirm once. Price increase conflicts with C-2026-02 (valid to 2027-03-31).', yes:'Confirm mapping, keep contract prices', no:'Review later', after:[['act','Mapping saved for future LabPlast files. Contract prices kept until 2027-03-31; reminder created for buyer.']] }, end:'exc' },
+    { id:'p-i030', kind:'order', title:'I030 SPR sensor chip, SA', sub:'Kinetiq Instruments · 3 chips', chan:['Portal upload','manual'], value:1180, minutes:15,
+      steps:[
+        ['read','Proposal: order by 2026-10-04 (overdue); 3 chips (MOQ 3).'],
+        ['check','Qualified supplier · 420 EUR/chip · below threshold.'],
+        ['act','Order file prepared in the portal format (CSV).'],
+        ['human','Portal login requires a one-time code sent to the buyer\'s phone. The agent stops here and hands over the prepared file.']
+      ], approval:{ text:'Upload the prepared order to the Kinetiq portal', detail:'File ready: kinetiq_PO-26-1354.csv · 3 × KQ-SA-CHIP · 1.2 k CHF. Needs your one-time code.', yes:'Mark as uploaded', after:[['act','Buyer uploaded the file. PO-26-1354 marked as sent.']] }, end:'wait' }
+  ];
+
+  var state, timer = null;
+  function init(){
+    state = { i:0, s:0, running:false, done:{}, pending:[], audit:[], auto:0, ex:0, minutes:0 };
+    $('log').innerHTML=''; $('audit').innerHTML='<div class="mut">No actions yet.</div>';
+    renderQueue(); renderApprovals(); kpis(); $('runstate').textContent='idle · press Run agent';
+    $('run').disabled=false; $('step').disabled=false; $('run').textContent='Run agent';
+  }
+  function threshold(){ return +$('thr').value; }
+  function now(){ var d=new Date(); return d.toTimeString().slice(0,8); }
+  function audit(msg){
+    if(!state.audit.length) $('audit').innerHTML='';
+    state.audit.push(msg);
+    var d=document.createElement('div'); d.textContent=now()+'  '+msg; $('audit').prepend(d);
+  }
+  function renderQueue(){
+    $('queue').innerHTML = TASKS.map(function(t,k){
+      var st = state.done[t.id] || (k===state.i && state.s>0 ? 'run' : '');
+      return '<div class="qi'+(k===state.i&&state.s>0&&!state.done[t.id]?' active':'')+'"><span class="dot '+st+'" aria-hidden="true"></span><div><div class="t">'+esc(t.title)+'</div><div class="s">'+esc(t.sub)+(t.value?' · '+fmt(t.value/1000,1)+' k CHF':'')+'</div></div><span class="chan '+t.chan[1]+'">'+esc(t.chan[0])+'</span></div>';
+    }).join('');
+  }
+  function kpis(){
+    $('k-q').textContent = TASKS.length - Object.keys(state.done).length;
+    $('k-auto').textContent = state.auto;
+    $('k-ap').textContent = state.pending.filter(function(p){return !p.kind;}).length;
+    $('k-ex').textContent = state.ex;
+    $('k-min').textContent = state.minutes+' min';
+  }
+  function caseBox(t){
+    var box=document.getElementById('case-'+t.id);
+    if(!box){
+      box=document.createElement('div'); box.className='case'; box.id='case-'+t.id;
+      box.innerHTML='<header style="display:flex"><span>'+esc(t.title)+' <span class="mut" style="font-weight:400">· '+esc(t.sub)+'</span></span><span class="chan '+t.chan[1]+'">'+esc(t.chan[0])+'</span></header>'+(t.doc?'<div class="step"><span class="tag read">input</span><div>Document received<pre class="doc">'+esc(t.doc)+'</pre></div></div>':'');
+      $('log').appendChild(box);
+    }
+    return box;
+  }
+  var LABEL={read:'read',check:'check',act:'action',human:'→ person',exc:'exception'};
+  function addStep(t, st){
+    var box=caseBox(t), d=document.createElement('div'); d.className='step';
+    d.innerHTML='<span class="tag '+st[0]+'">'+LABEL[st[0]]+'</span><div>'+esc(st[1])+(st[2]?'<pre class="doc">'+esc(st[2])+'</pre>':'')+'</div>';
+    box.appendChild(d); $('log').scrollTop=$('log').scrollHeight;
+    if(st[0]==='act'||st[0]==='exc'||st[0]==='human') audit(t.title.split(' ')[0]+' · '+st[1].split('.')[0]);
+  }
+  function finish(t, how){
+    state.done[t.id]=how; state.i++; state.s=0;
+    if(how==='done' && !t._human){ state.auto++; state.minutes+=t.minutes; }
+    renderQueue(); kpis();
+  }
+  function steps(t){
+    // orders under the threshold skip the approval; above it they need one
+    if(t.kind==='order' && t.approval && !t.approval.kind && t.chan[1]==='auto'){
+      if(t.value < threshold()) return t.steps.slice(0,-1).concat(t.approval.after.map(function(a){return [a[0], a[1].replace(/^Approved\. /,'Below threshold, sent automatically. ')];}));
+    }
+    var s=t.steps.slice();
+    if(t.kind==='order' && !t.approval && t.value >= threshold()){
+      s = s.slice(0,1).concat([['check','Contract or last-PO price confirmed.'],['human','Value '+fmt(t.value/1000,1)+' k CHF is above the threshold: approval requested.']]);
+      t._needs = { text:'Send '+t.title+' to '+t.sub.split(' · ')[0]+'?', detail:fmt(t.value/1000,1)+' k CHF · price as last PO.', yes:'Approve and send', after:[['act','Approved and sent.']] };
+    } else t._needs = null;
+    return s;
+  }
+  function tick(){
+    if(state.i>=TASKS.length){ stop(); $('runstate').textContent='queue empty · '+state.auto+' done on its own'; $('run').disabled=true; $('step').disabled=true; return false; }
+    var t=TASKS[state.i], s=steps(t);
+    if(state.s===0){ t._human=false; $('runstate').textContent='working on '+t.title; renderQueue(); }
+    if(state.s < s.length){ addStep(t, s[state.s]); state.s++; renderQueue(); return true; }
+    var ap = (t.approval && !(t.kind==='order' && t.chan[1]==='auto' && t.value < threshold())) ? t.approval : t._needs;
+    if(ap){
+      t._human=true;
+      if(ap.kind==='exc') state.ex++;
+      state.pending.push({ t:t, ap:ap, kind:ap.kind });
+      finish(t, ap.kind==='exc' ? 'exc' : 'wait'); renderApprovals();
+      if(ap.kind!=='exc') state.minutes += Math.round(t.minutes*0.8);
+      else state.minutes += Math.round(t.minutes*0.6);
+      kpis(); return true;
+    }
+    finish(t,'done'); return true;
+  }
+  function renderApprovals(){
+    var n=state.pending.length;
+    $('apcount').textContent = n ? n+' open' : 'nothing yet';
+    if(!n){ $('approvals').innerHTML='<div class="empty">Approvals and exceptions appear here. Everything else runs on its own.</div>'; return; }
+    $('approvals').innerHTML = state.pending.map(function(p,k){
+      return '<div class="ap"><span class="st '+(p.kind==='exc'?'crit':'warn')+'" style="align-self:flex-start">'+(p.kind==='exc'?'Exception':'Approval')+'</span><div style="font-weight:500">'+esc(p.ap.text)+'</div><div class="mut" style="font-size:14px">'+esc(p.ap.detail)+'</div><div class="row"><button class="btn btn-p sm" data-k="'+k+'" data-a="yes">'+esc(p.ap.yes)+'</button>'+(p.ap.no?'<button class="btn sm" data-k="'+k+'" data-a="no">'+esc(p.ap.no)+'</button>':'<button class="btn sm" data-k="'+k+'" data-a="no">Reject</button>')+'</div></div>';
+    }).join('');
+  }
+  $('approvals').addEventListener('click', function(e){
+    var b=e.target.closest('button[data-k]'); if(!b) return;
+    var p=state.pending.splice(+b.dataset.k,1)[0];
+    if(b.dataset.a==='yes'){ p.ap.after.forEach(function(st){ addStep(p.t, st); }); state.done[p.t.id]='done'; }
+    else { addStep(p.t, ['human','Decision kept by a person: '+(p.ap.no||'rejected')+'.']); state.done[p.t.id]= p.kind==='exc' ? 'exc' : 'done'; }
+    renderQueue(); renderApprovals(); kpis();
+  });
+  function stop(){ if(timer){ clearInterval(timer); timer=null; } state.running=false; $('run').textContent='Run agent'; }
+  $('run').onclick=function(){
+    if(state.running){ stop(); $('runstate').textContent='paused'; return; }
+    state.running=true; $('run').textContent='Pause';
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    timer=setInterval(function(){ if(!tick()) stop(); }, reduce ? 250 : 700);
+  };
+  $('step').onclick=function(){ stop(); tick(); };
+  $('reset').onclick=function(){ stop(); TASKS.forEach(function(t){ var b=document.getElementById('case-'+t.id); if(b) b.remove(); }); init(); };
+  $('thr').onchange=function(){ if(!state.audit.length) return; audit('Threshold changed to '+fmt(threshold())+' CHF'); };
+  init();
+})();
+</script>
