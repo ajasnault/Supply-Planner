@@ -4,6 +4,12 @@ Supply planning for an automated protein lab with two sites (Lausanne live, Lond
 
 **All data in `data/` is synthetic** (see `data/DATA_DICTIONARY.md`). Reference date: 2026-10-19.
 
+## Live demo
+
+- **App**: https://ajasnault.github.io/supply-planner/ (← → to change screen, F for full screen; `#orders` and `#scenarios` for the admin screens)
+- **Procurement agent**: https://ajasnault.github.io/supply-planner/agent.html
+- **Mockups**: https://ajasnault.github.io/supply-planner/mockups.html
+
 ## Layout
 
 | Path | What |
