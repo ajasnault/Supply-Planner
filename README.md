@@ -6,9 +6,9 @@ Supply planning for an automated protein lab with two sites (Lausanne live, Lond
 
 ## Live demo
 
-- **App**: https://ajasnault.github.io/supply-planner/ (← → to change screen, F for full screen; `#orders` and `#scenarios` for the admin screens)
-- **Procurement agent**: https://ajasnault.github.io/supply-planner/agent.html
-- **Mockups**: https://ajasnault.github.io/supply-planner/mockups.html
+- **App**: https://ajasnault.github.io/Supply-Planner/ (← → to change screen, F for full screen; `#orders` and `#scenarios` for the admin screens)
+- **Procurement agent**: https://ajasnault.github.io/Supply-Planner/agent.html
+- **Mockups**: https://ajasnault.github.io/Supply-Planner/mockups.html
 
 ## Layout
 
