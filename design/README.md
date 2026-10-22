@@ -1,6 +1,6 @@
 # Supply Planner — design reference
 
-Mockups and rules for building the Supply Planner beta. Every figure in the mockups comes from the synthetic dataset (`adaptyv-supply-dataset/`, reference date **2026-10-19**) and is reproduced by `reference/compute_reference.py`. When the app's engine runs on the same dataset, it must return the values in `reference/expected_values.json`.
+Mockups and rules for building the Supply Planner beta. Every figure in the mockups comes from the synthetic dataset (`data/`, reference date **2026-10-19**) and is reproduced by `reference/compute_reference.py`. When the app's engine runs on the same dataset, it must return the values in `reference/expected_values.json`.
 
 ## Contents
 
@@ -82,7 +82,6 @@ These are first-version rules, deliberately simple. Change them in one place in 
 | Helix I001 tier 3 | 482 424 fragments in 2027 → 17.60 vs 19.20 USD → ≈ 619 k CHF/year |
 | Octane I020 tier | 102 301 u in 2027 → 10.40 vs 11.50 USD → ≈ 90 k CHF/year |
 | London initial stock | 118 k CHF landed, 9 supplier orders, first by 2026-11-23 (Octane); I022 has no qualified UK source |
-
 | Material COGS | 4.58 M CHF in 2026 to date; 22.0 M CHF forecast 2027 (459 452 proteins) |
 | Savings pipeline | 1.52 M CHF/year recurring = 3.32 CHF/protein, plus 117 k one-off (I010 lot) |
 
